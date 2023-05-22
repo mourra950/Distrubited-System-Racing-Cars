@@ -1,13 +1,38 @@
 var express = require('express');
 var router = express.Router();
+const { MongoClient, ServerApiVersion } = require('mongodb');
+
+const uri = "mongodb+srv://omarmayousef:G7IQyLiT1OKcn0Lj@cluster0.shg8nan.mongodb.net/?retryWrites=true&w=majority";
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
+
+  client.connect()
+  console.log("connected");
+  const db = client.db('testdb');
+  const collection = db.collection('testcollection');
+  collection.insertOne({ 'name': req.body.name })
+  res.send('Hello ' + req.body.name);
+
+});
+
+router.post('/', function (req, res, next) {
   console.log(req.body)
   res.send('Hello ' + req.body.name);
 });
-router.put('/', function(req, res, next) {
-  res.status(404).json({put:{test:'hassan'}});
+
+router.get('/test', function (req, res, next) {
+  res.status(404).json({ put: { test: 'hassan' } });
 });
 
 
