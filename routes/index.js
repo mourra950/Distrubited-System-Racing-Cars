@@ -71,4 +71,4 @@ router.get('/test', function (req, res, next) {
 
 
 */
-module.exports = httpServer;
+// module.exports = httpServer;
