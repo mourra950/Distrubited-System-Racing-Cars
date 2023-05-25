@@ -1,6 +1,45 @@
-var express = require('express');
+const express = require("express");
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+
+const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {});
+
+io.on("connection", (socket) => {
+  console.log("someone connected")
+});
+
+httpServer.listen(3000);
+
+
+
+
+/*
 var router = express.Router();
 const { MongoClient, ServerApiVersion } = require('mongodb');
+
+import { createServer } from "http";
+import { Server } from "socket.io";
+
+const httpServer = createServer();
+const io = new Server(httpServer, {
+  // options
+});
+
+io.on("connection", (socket) => {
+  // ...
+});
+
+httpServer.listen(3000);
+*/
+
+
+
+
+
+
+
 
 const uri = "mongodb+srv://omarmayousef:G7IQyLiT1OKcn0Lj@cluster0.shg8nan.mongodb.net/?retryWrites=true&w=majority";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
