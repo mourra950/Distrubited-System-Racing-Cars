@@ -34,13 +34,7 @@ io.on("connection", (socket) => {
 httpServer.listen(3000);
 */
 
-
-
-
-
-
-
-
+/*
 const uri = "mongodb+srv://omarmayousef:G7IQyLiT1OKcn0Lj@cluster0.shg8nan.mongodb.net/?retryWrites=true&w=majority";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -50,10 +44,11 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
-
+*/
 
 
 /* GET home page. */
+/*
 router.get('/', function (req, res, next) {
 
   client.connect()
@@ -77,3 +72,4 @@ router.get('/test', function (req, res, next) {
 
 
 module.exports = router;
+*/
