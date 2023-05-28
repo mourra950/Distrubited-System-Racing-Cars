@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>796</width>
+    <height>591</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,9 +19,25 @@
      <widget class="QTextEdit" name="message_txt"/>
     </item>
     <item>
+     <widget class="QTextEdit" name="chat_txt"/>
+    </item>
+    <item>
      <widget class="QPushButton" name="send_btn">
       <property name="text">
        <string>send</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="refresh">
+      <property name="maximumSize">
+       <size>
+        <width>10</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </item>
@@ -32,7 +48,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>796</width>
      <height>26</height>
     </rect>
    </property>
