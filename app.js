@@ -18,6 +18,10 @@ io.on("connection", (socket) => {
   });
 });
 
-
-
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+app.listen(3001, () => {
+  console.log(`Example app listening on port ${port}`)
+})
 httpServer.listen(3000);
