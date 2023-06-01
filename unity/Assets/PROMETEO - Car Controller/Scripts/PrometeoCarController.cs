@@ -263,7 +263,7 @@ public class PrometeoCarController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
 
       //CAR DATA
