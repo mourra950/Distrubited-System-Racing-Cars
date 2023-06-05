@@ -20,7 +20,17 @@ def connect_handler():
 @sio.event
 def br(data):
     current_time = datetime.utcnow().strftime("%H:%M:%S:%f")[:-3]
-    chat_list.append((str(data['msg']),str(current_time)))
+    chat_list.append((str(data['msg']), str(current_time)))
+
+
+@sio.event
+def roomStatus(data):
+    print(data)
+
+
+@sio.event
+def createRoomStatus(data):
+    print(data)
 
 
 @sio.event
@@ -55,18 +65,24 @@ class Home(QMainWindow):
         for i in chat_list:
             self.chat.insertPlainText(str(i))
             self.chat.insertPlainText('\n')
-            
 
     def emitting(self, value):
         current_time = datetime.utcnow().strftime("%H:%M:%S:%f")[:-3]
-        chat_list.append((str(value),str(current_time)))
+        chat_list.append((str(value), str(current_time)))
         sio.emit('my message', {'msg': value})
+        sio.emit('joinRoom', {'roomID': value})
+
         self.inserting()
         # print("Current Time =", current_time)
 
+# http://localhost:3000
+# https://race-car.onrender.com
+
 
 def run():
-    sio.connect('https://race-car.onrender.com')
+    sio.connect('http://localhost:3000')
+    sio.emit('CreateRoom')
+
     home = Home()
     home.show()
     app.exec_()
