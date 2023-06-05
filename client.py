@@ -100,11 +100,10 @@ def Chat():
             print('unity connected to python')
             counter = 0
             while True:
-                ...
-        #     data = conn.recv(1024).decode('utf-8')
-        #     conn.send('Ok'.encode('utf-8'))
-        #     # broadcast message to all servers
-        #     counter = 0
+                data = conn.recv(1024).decode('utf-8')
+                print(data)
+                # broadcast message to all servers
+                counter = 0
         except:
             pass
 
@@ -127,6 +126,5 @@ def senddata():
 
     print('ahmed')
     testsender.send('Ok'.encode('utf-8'))
-    data = testsender.recv(1024).decode('utf-8')
 
     counter = 0
