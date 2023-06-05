@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Net;
+using UnityEngine.SceneManagement;
 using System.Net.Sockets;
 using UnityEngine;
 using System.Threading.Tasks;
@@ -11,36 +12,32 @@ public class CarSocket : MonoBehaviour
     private const int serverPort = 3002;
     NetworkStream stream;
     TcpClient client;
+    public int counter;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         try
         {
             client = new TcpClient(serverAddress, serverPort);
-
-            // Get the network stream for sending data
             stream = client.GetStream();
+            Debug.Log("Connected to the server");
 
-            // Convert the message to bytes
-
-
-            // Clean up
-            //stream.Close();
-            // client.Close();
         }
         catch (Exception e)
         {
             Debug.LogError("Error connecting to the server: " + e.Message);
         }
+        DontDestroyOnLoad(this);
+
     }
 
     // Update is called once per frame
-    async void Update()
+    public void Update()
     {
-        string coords = this.transform.position.x + "," + this.transform.position.z;
+
+        string coords = String.Format("{0:0.00}", this.transform.position.x) + "," + String.Format("{0:0.00}", this.transform.position.z);
 
         byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(coords);
-        await WaitOneSecondAsync();
         try
         {
             stream.Write(messageBytes, 0, messageBytes.Length);
@@ -49,14 +46,20 @@ public class CarSocket : MonoBehaviour
         {
             Debug.LogError("Error connecting to the server: " + e.Message);
         }
-        // Send the message to the server
-        Debug.Log(DateTime.Now.ToString("HH:mm:ss"));
 
+
+        // Send the message to the server
+    }
+
+    public void gotolobby()
+    {
+
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
 
     }
 
     private async Task WaitOneSecondAsync()
     {
-        await Task.Delay(TimeSpan.FromMilliseconds(500));
+        await Task.Delay(TimeSpan.FromMilliseconds(2000));
     }
 }
