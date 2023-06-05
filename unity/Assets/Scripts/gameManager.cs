@@ -16,8 +16,6 @@ public class gameManager : MonoBehaviour
     NetworkStream stream;
     bool connectionSuccess = false;
     TcpClient client = new TcpClient();
-    public int counter;
-    // Start is called before the first frame update
     async void Awake()
     {
 

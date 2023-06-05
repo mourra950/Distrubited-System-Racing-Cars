@@ -359,6 +359,7 @@
 "Assets/PROMETEO - Car Controller/Scripts/PrometeoCarController.cs"
 "Assets/PROMETEO - Car Controller/Scripts/PrometeoTouchInput.cs"
 "Assets/Scripts/CarSocket.cs"
+"Assets/Scripts/ChatManager.cs"
 "Assets/Scripts/gameManager.cs"
 -langversion:9.0
 
