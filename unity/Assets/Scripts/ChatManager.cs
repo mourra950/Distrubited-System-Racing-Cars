@@ -11,6 +11,9 @@ using System.Threading;
 
 public class ChatManager : MonoBehaviour
 {
+    public TMP_InputField chatInput;
+    public TMP_InputField chatOutput;
+
     // Start is called before the first frame update
     public GameObject gamestate;
     gameManager gameManager;
@@ -22,7 +25,7 @@ public class ChatManager : MonoBehaviour
     // Start is called before the first frame update
     async void Awake()
     {
-        gameManager = gamestate.GetComponent<gameManager>();
+        // gameManager = gamestate.GetComponent<gameManager>();
 
         Debug.Log("Looking for a server");
         while (true)
@@ -41,6 +44,29 @@ public class ChatManager : MonoBehaviour
         DontDestroyOnLoad(this);
         Thread backgroundThread = new Thread(new ThreadStart(receiveMessages));
         backgroundThread.Start();
+
+    }
+    public void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            if (chatInput.isFocused == false)
+            {
+                chatInput.ActivateInputField();
+                chatInput.Select();
+            }
+            else
+            {
+                if (chatInput.text.Trim() != "")
+                {
+                    sendata(chatInput.text.Trim());
+                }
+                chatInput.text = "";
+                chatInput.DeactivateInputField();
+            }
+        }
+
     }
     public void sendata(String responseData)
     {
@@ -49,10 +75,6 @@ public class ChatManager : MonoBehaviour
         {
             byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(responseData);
             stream.Write(messageBytes, 0, messageBytes.Length);
-            Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            Debug.Log(responseData);
-
         }
         catch (Exception e)
         {
@@ -68,11 +90,11 @@ public class ChatManager : MonoBehaviour
         {
             try
             {
+                Debug.Log("asdasd");
+
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                 Debug.Log(responseData);
-                byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes("OK");
-                stream.Write(messageBytes, 0, messageBytes.Length);
             }
             catch (Exception e)
             {
