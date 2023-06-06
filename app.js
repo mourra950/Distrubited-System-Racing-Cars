@@ -44,6 +44,20 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
+
+
+
+
+  socket.on("Chat", (data) => {
+    const rooms = io.of("/").adapter.rooms;
+    console.log(socket.id)
+
+    console.log(rooms.has(data.RoomID))
+    socket.join(data.RoomID)
+    console.log("Chat accessed");
+    socket.broadcast.to(data.RoomID).emit('ChatBroadcast', { 'msg': data.msg })
+  })
+
 });
 
 
