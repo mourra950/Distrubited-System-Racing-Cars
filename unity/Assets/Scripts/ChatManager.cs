@@ -73,6 +73,7 @@ public class ChatManager : MonoBehaviour
         Byte[] data = new Byte[1024];
         try
         {
+            Debug.Log("sending data from unity to python");
             byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(responseData);
             stream.Write(messageBytes, 0, messageBytes.Length);
         }
@@ -83,22 +84,24 @@ public class ChatManager : MonoBehaviour
 
     }
     public void receiveMessages()
-    {
+    {   
+        int counter=0;
         String responseData = String.Empty;
         Byte[] data = new Byte[1024];
         while (true)
         {
             try
             {
-                Debug.Log("asdasd");
-
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                Debug.Log(responseData);
+                Debug.Log("Message received from another server"+responseData);
             }
             catch (Exception e)
             {
+                counter++;
                 Debug.LogError("Error connecting to the server: " + e.Message);
+                if (counter>2000)
+                    break;
             }
         }
     }
