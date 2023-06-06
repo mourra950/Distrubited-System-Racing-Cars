@@ -7,8 +7,9 @@ import keyboard
 # standard Python
 sio = socketio.Client()
 sendServer = None
-SessionID = None
-testsender=None
+SessionID = '123'
+unityChatSocket = None
+
 
 @sio.on('connect')
 def connect_handler():
@@ -18,6 +19,14 @@ def connect_handler():
 @sio.event
 def roomStatus(data):
     print(data)
+
+
+@sio.event
+def ChatBroadcast(data):
+    global unityChatSocket
+    print("the data received from sio")
+    # Send received data from server to unity
+    unityChatSocket.send(data['msg'].encode('utf-8'))
 
 
 @sio.event
@@ -87,44 +96,53 @@ def unitySend():
 
 
 def Chat():
-    global testsender
+    global unityChatSocket
     while True:
-        try:
+        
             ADRESS = "127.0.0.1"
             PORTReceive = 3004
             S = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             S.bind((ADRESS, PORTReceive))
             S.listen(5)
             conn, adress = S.accept()
-            testsender=conn
+            unityChatSocket = conn
             print('unity connected to python')
-            counter = 0
             while True:
+                print('inside the loop of receiving')
                 data = conn.recv(1024).decode('utf-8')
-                print(data)
+                print('received from unity the following data',data)
+                func, data = data.split(',', maxsplit=1)
+                print(func, data)
                 # broadcast message to all servers
-                counter = 0
-        except:
-            pass
+                if func == "Message":
+                    sio.emit('Chat', {'RoomID': SessionID, 'msg': data})
+                    print('data emmited finally')
+                else:
+                    pass
+                print('end of loop')
+
+        
 
 
 # https://race-car.onrender.com
 # 'http://localhost:3000'
 if __name__ == '__main__':
-    # sio.connect('http://localhost:3000')
+    sio.connect('http://localhost:3000')
     # thread1 = threading.Thread(target=unityReceive)
-    # thread2 = threading.Thread(target=unitySend) 
+    # thread2 = threading.Thread(target=unitySend)
+    sio.emit('Chat', {'RoomID': SessionID, 'msg': 'Success my Dude'})
+
     thread3 = threading.Thread(target=Chat)
 
-    keyboard.add_hotkey('space', lambda:senddata() )
+    # keyboard.add_hotkey('space', lambda: senddata())
 
     # thread1.start()
     # thread2.start()
     thread3.start()
+
+
 def senddata():
-    global testsender
-
-    print('ahmed')
-    testsender.send('Ok'.encode('utf-8'))
-
+    global unityChatSocket
+    sio.emit('Chat', {'RoomID': SessionID, 'msg': 'Success my Dude'})
+    print("ahemd")
     counter = 0
