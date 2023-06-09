@@ -106,20 +106,15 @@ def Chat():
             S.listen(5)
             conn, adress = S.accept()
             unityChatSocket = conn
-            print('unity connected to python')
             while True:
-                print('inside the loop of receiving')
                 data = conn.recv(1024).decode('utf-8')
-                print('received from unity the following data',data)
                 func, data = data.split(',', maxsplit=1)
                 print(func, data)
                 # broadcast message to all servers
                 if func == "Message":
                     sio.emit('Chat', {'RoomID': SessionID, 'msg': data})
-                    print('data emmited finally')
                 else:
                     pass
-                print('end of loop')
 
         
 
