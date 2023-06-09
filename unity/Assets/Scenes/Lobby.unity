@@ -160,7 +160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 12.3339, y: 56.2375}
+  m_AnchoredPosition: {x: 12.3339, y: 56.23755}
   m_SizeDelta: {x: 165.2935, y: 18.7902}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &221978860
@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 319299674}
   - component: {fileID: 319299673}
   - component: {fileID: 319299677}
+  - component: {fileID: 319299678}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -368,6 +369,19 @@ MonoBehaviour:
   chatOutput: {fileID: 540770762}
   gamestate: {fileID: 0}
   RoomID: {fileID: 0}
+--- !u!114 &319299678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319299672}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6c3679e67477c49ac3acd83a220534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: {fileID: 540770762}
 --- !u!1 &464390492
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,47 +643,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 'edada dawdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-
-    awdad
-
-    asd
-
-    ada
-
-    sda
-
-    wd
-
-    ads
-
-    adw
-
-    ad
-
-    as
-
-    da
-
-    wd
-
-    awd
-
-    ad
-
-    sa
-
-    dw
-
-    ad
-
-    awd
-
-    ad
-
-    awd
-
-    a'
+  m_Text: 
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -922,8 +896,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "edada dawdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\nawdad\nasd\nada\nsda\nwd\nads\nadw\nad\nas\nda\nwd\nawd\nad\nsa\ndw\nad\nawd\nad\nawd\na\u200B"
-  m_isRightToLeft: 1
+  m_text: "\u200B"
+  m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
@@ -967,7 +941,7 @@ MonoBehaviour:
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 5
+  m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
@@ -1829,7 +1803,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900866042}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 

@@ -13,7 +13,7 @@ public class ChatManager : MonoBehaviour
 {
     public TMP_InputField chatInput;
     public TMP_InputField chatOutput;
-
+    List<String> chatList= new List<string>();
     // Start is called before the first frame update
     public GameObject gamestate;
     gameManager gameManager;
@@ -55,6 +55,7 @@ public class ChatManager : MonoBehaviour
             {
                 chatInput.ActivateInputField();
                 chatInput.Select();
+                chatList.Add("ahmed mohamed");
             }
             else
             {

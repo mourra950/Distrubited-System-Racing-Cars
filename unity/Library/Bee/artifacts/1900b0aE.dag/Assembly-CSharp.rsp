@@ -361,6 +361,7 @@
 "Assets/Scripts/CarSocket.cs"
 "Assets/Scripts/ChatManager.cs"
 "Assets/Scripts/gameManager.cs"
+"Assets/Scripts/texttest.cs"
 -langversion:9.0
 
 /deterministic
