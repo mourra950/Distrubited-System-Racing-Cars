@@ -173,7 +173,9 @@ cython_debug/
 **/[Bb]uilds/
 **/[Ll]ogs/
 **/[Uu]ser[Ss]ettings/
- 
+
+/unity/Library/
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 **/[Mm]emoryCaptures/
