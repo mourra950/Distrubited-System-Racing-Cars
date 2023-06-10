@@ -49,6 +49,8 @@ io.on("connection", (socket) => {
     const rooms = io.of("/").adapter.rooms;
     console.log(data)
     console.log(rooms)
+    console.log(rooms.get(data.RoomID).has(socket.id))
+    console.log(data.RoomID)
     if (rooms.has(data.RoomID)) {
       if (rooms.get(data.RoomID).has(socket.id)) {
         console.log("Chat accessed");
