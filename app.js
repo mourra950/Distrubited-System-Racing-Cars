@@ -31,12 +31,10 @@ io.on("connection", (socket) => {
 
     if (rooms.has(data.roomID)) {
       socket.join(data.roomID)
-      console.log(rooms)
-      socket.emit('roomStatus', { status: 'true' })
-
+      socket.emit('roomStatus', { 'status': 'true','RoomID':data.roomID})
     }
     else {
-      socket.emit('roomStatus', { status: 'false' })
+      socket.emit('roomStatus', { 'status': 'false' })
     }
     //socket.join();
   })
@@ -55,10 +53,10 @@ io.on("connection", (socket) => {
     console.log()
     if (rooms.has(data.RoomID)) {
       if (rooms.get(data.RoomID).has(socket.id)) {
-        
+
         console.log("Chat accessed");
         socket.broadcast.to(data.RoomID).emit('ChatBroadcast', { 'msg': data.msg })
-      
+
       }
     }
   })
