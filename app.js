@@ -27,11 +27,10 @@ io.on("connection", (socket) => {
     const rooms = io.of("/").adapter.rooms;
 
     console.log(rooms.has(data.roomID))
-    console.log(rooms.get(data.roomID).size)
 
     if (rooms.has(data.roomID)) {
       socket.join(data.roomID)
-      socket.emit('roomStatus', { 'status': 'true','RoomID':data.roomID})
+      socket.emit('roomStatus', { 'status': 'true', 'RoomID': data.roomID })
     }
     else {
       socket.emit('roomStatus', { 'status': 'false' })
