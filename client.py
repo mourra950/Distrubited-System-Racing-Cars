@@ -35,7 +35,9 @@ def ChatBroadcast(data):
     print("the data received from sio")
     # Send received data from server to unity
     unityChatSocket.send(data['msg'].encode('utf-8'))
-
+@sio.on('*')
+def catch_all(event, data):
+    print('all handlers',event,data)
 
 @sio.event
 def createRoomStatus(data):
@@ -128,6 +130,7 @@ def Chat():
             print(func, data)
             # broadcast message to all servers
             if func == "/Message":
+                print(data)
                 sio.emit('ChatRoom', {'RoomID': RoomID, 'msg': data})
             else:
                 pass
@@ -139,7 +142,7 @@ if __name__ == '__main__':
     sio.connect('https://race-car.onrender.com/')
     thread1 = threading.Thread(target=unityReceive)
     thread2 = threading.Thread(target=unitySend)
-    sio.emit('Chat', {'RoomID': RoomID, 'msg': 'Success my Dude'})
+    # sio.emit('Chat', {'RoomID': RoomID, 'msg': 'Success my Dude'})
 
     thread3 = threading.Thread(target=Chat)
 
