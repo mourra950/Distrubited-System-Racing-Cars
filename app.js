@@ -17,10 +17,10 @@ io.on("connection", (socket) => {
     console.log(msg);
   });
 
-  socket.on("CreateRoom", () => {
+  socket.on("CreateRoom", (data) => {
     console.log(socket.id)
-    socket.join(socket.id+"'")
-    socket.emit('createRoomStatus', { 'ID': socket.id+"'" })
+    socket.join(data.RoomID)
+    socket.emit('createRoomStatus', { 'ID': data.RoomID })
   })
 
   socket.on("joinRoom", (data) => {
