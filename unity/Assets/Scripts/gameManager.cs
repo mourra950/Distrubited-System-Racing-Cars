@@ -120,7 +120,42 @@ public class gameManager : MonoBehaviour
 
     public void JoinGame()
     {
+        string responseData;
+        Byte[] data = new Byte[1024];
+        try
+        {
+            Debug.Log("sending data from unity to python");
+            byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes("/Join,"+RoomID.text.Trim());
+            if (RoomID.text=="")
+            {
+                return;
+            }
+            Sendstream.Write(messageBytes, 0, messageBytes.Length);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("unable to send");
+        }
+
+        try
+        {
+            Int32 bytes = Receivestream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            if(responseData=="false")
+            {
+                return;
+            }
+            bytes = Receivestream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            gameID = responseData;
+        }
+        catch (Exception e)
+        {
+            Debug.Log("error in receiving");
+        }
+
         Debug.Log(RoomID.text);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
 
         // SceneManager.LoadScene(1, LoadSceneMode.Single);
 
