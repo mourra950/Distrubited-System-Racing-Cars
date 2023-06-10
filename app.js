@@ -52,7 +52,7 @@ io.on("connection", (socket) => {
     if (rooms.has(data.RoomID)) {
       if (rooms.get(data.RoomID).has(socket.id)) {
         console.log("Chat accessed");
-        io.broadcast.to(data.RoomID).emit('ChatBroadcast', { 'msg': data.msg })
+        socket.to(data.RoomID).emit('ChatBroadcast', { 'msg': data.msg })
       }
     }
   })
