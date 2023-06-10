@@ -20,7 +20,7 @@ io.on("connection", (socket) => {
   socket.on("CreateRoom", () => {
     console.log(socket.id)
     socket.join(socket.id)
-    socket.emit('createRoomStatus', { ID: socket.id })
+    socket.emit('createRoomStatus', { 'ID': socket.id })
   })
 
   socket.on("joinRoom", (data) => {
@@ -48,14 +48,19 @@ io.on("connection", (socket) => {
 
 
 
-  socket.on("Chat", (data) => {
+  socket.on("ChatRoom", (data) => {
     const rooms = io.of("/").adapter.rooms;
-    console.log(socket.id)
-    console.log(rooms.has(data.RoomID))
+    console.log(data)
     socket.join(data.RoomID)
-    console.log("Chat accessed");
-    
-    socket.broadcast.to(data.RoomID).emit('ChatBroadcast', { 'msg': data.msg })
+    console.log()
+    if (rooms.has(data.RoomID)) {
+      if (rooms.get(data.RoomID).has(socket.id)) {
+        
+        console.log("Chat accessed");
+        socket.broadcast.to(data.RoomID).emit('ChatBroadcast', { 'msg': data.msg })
+      
+      }
+    }
   })
 
 });
