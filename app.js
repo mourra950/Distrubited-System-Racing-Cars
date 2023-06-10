@@ -48,14 +48,11 @@ io.on("connection", (socket) => {
   socket.on("ChatRoom", (data) => {
     const rooms = io.of("/").adapter.rooms;
     console.log(data)
-    socket.join(data.RoomID)
-    console.log()
+    console.log(rooms)
     if (rooms.has(data.RoomID)) {
       if (rooms.get(data.RoomID).has(socket.id)) {
-
         console.log("Chat accessed");
         socket.broadcast.to(data.RoomID).emit('ChatBroadcast', { 'msg': data.msg })
-
       }
     }
   })
