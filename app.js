@@ -58,7 +58,9 @@ io.on("connection", (socket) => {
   })
 
 });
-
+io.of("/").adapter.on("join-room", (room, id) => {
+  console.log(`socket ${id} has joined room ${room}`);
+});
 
 
 httpServer.listen(3000);
