@@ -13,11 +13,11 @@ public class ChatManager : MonoBehaviour
 {
     public TMP_InputField chatInput;
     public TMP_InputField chatOutput;
-    List<String> chatList= new List<string>();
+    List<String> chatList = new List<string>();
     // Start is called before the first frame update
     public GameObject gamestate;
     gameManager gameManager;
-    public TMP_InputField RoomID;
+    public TMP_Text RoomID;
     private const string serverAddress = "127.0.0.1";
     private const int serverPort = 3004;
     NetworkStream stream;
@@ -25,7 +25,6 @@ public class ChatManager : MonoBehaviour
     // Start is called before the first frame update
     async void Awake()
     {
-        // gameManager = gamestate.GetComponent<gameManager>();
 
         Debug.Log("Looking for a server");
         while (true)
@@ -46,8 +45,27 @@ public class ChatManager : MonoBehaviour
         backgroundThread.Start();
 
     }
+
+
+    public void Start()
+    {
+        gamestate = GameObject.Find("sceneManager");
+        gameManager = gamestate.GetComponent<gameManager>();
+        try
+        {
+            RoomID.SetText("Room ID = " + gameManager.gameID);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error connecting to the server: " + e.Message);
+
+        }
+        Debug.Log("start function");
+
+    }
     public void Update()
     {
+
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
@@ -59,9 +77,10 @@ public class ChatManager : MonoBehaviour
             }
             else
             {
+                string senddata="/Message,"+chatInput.text.Trim();
                 if (chatInput.text.Trim() != "")
                 {
-                    sendata(chatInput.text.Trim());
+                    sendata(senddata);
                 }
                 chatInput.text = "";
                 chatInput.DeactivateInputField();
@@ -85,8 +104,8 @@ public class ChatManager : MonoBehaviour
 
     }
     public void receiveMessages()
-    {   
-        int counter=0;
+    {
+        int counter = 0;
         String responseData = String.Empty;
         Byte[] data = new Byte[1024];
         while (true)
@@ -95,13 +114,13 @@ public class ChatManager : MonoBehaviour
             {
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                Debug.Log("Message received from another server"+responseData);
+                Debug.Log("Message received from another server" + responseData);
             }
             catch (Exception e)
             {
                 counter++;
                 Debug.LogError("Error connecting to the server: " + e.Message);
-                if (counter>2000)
+                if (counter > 2000)
                     break;
             }
         }

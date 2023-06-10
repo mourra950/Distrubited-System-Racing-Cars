@@ -11,11 +11,16 @@ using TMPro;
 public class gameManager : MonoBehaviour
 {
     public TMP_InputField RoomID;
+    public string gameID = "123412s";
     private const string serverAddress = "127.0.0.1";
     private const int serverPort = 3003;
-    NetworkStream stream;
+    NetworkStream Receivestream;
+    NetworkStream Sendstream;
+
     bool connectionSuccess = false;
-    TcpClient client = new TcpClient();
+    TcpClient unitySend = new TcpClient();
+    TcpClient unityReceive = new TcpClient();
+
     async void Awake()
     {
 
@@ -24,24 +29,39 @@ public class gameManager : MonoBehaviour
         {
             try
             {
-                await client.ConnectAsync(serverAddress, serverPort);
+                await unityReceive.ConnectAsync(serverAddress, 3002);
                 break;
             }
             catch (Exception e)
             {
-                Debug.LogError("Error connecting to the server: " + e.Message);
+                Debug.LogError("Error connecting to the receive sender: " + e.Message);
             }
         }
-        Debug.Log("Connected to the server");
+        while (true)
+        {
+            try
+            {
+                await unitySend.ConnectAsync(serverAddress, 3003);
+                break;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error connecting to the Send server: " + e.Message);
+            }
+        }
+
+        Debug.Log("Connected to the two servers python success");
         connectionSuccess = true;
-        stream = client.GetStream();
+        Receivestream = unityReceive.GetStream();
+        Sendstream = unitySend.GetStream();
+
         DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame
     public void Update()
     {
-        if (connectionSuccess)
+        /*if (connectionSuccess)
         {
             String responseData = String.Empty;
             Byte[] data = new Byte[256];
@@ -60,13 +80,41 @@ public class gameManager : MonoBehaviour
             }
 
         }
+        */
         // Send the message to the server
     }
 
     public void CreateGame()
     {
+        string responseData;
+        Byte[] data = new Byte[1024];
+
+
+        try
+        {
+            Debug.Log("sending data from unity to python");
+            byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes("/Create,a");
+            Sendstream.Write(messageBytes, 0, messageBytes.Length);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("unable to send");
+        }
+
+        try
+        {
+            Int32 bytes = Receivestream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            Debug.Log("Created a game with code" + responseData);
+            gameID = responseData;
+        }
+        catch (Exception e)
+        {
+            Debug.Log("error in receiving");
+        }
 
         SceneManager.LoadScene(1, LoadSceneMode.Single);
+
 
     }
 
@@ -87,8 +135,8 @@ public class gameManager : MonoBehaviour
         try
         {
             byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(responseData);
-            stream.Write(messageBytes, 0, messageBytes.Length);
-            Int32 bytes = stream.Read(data, 0, data.Length);
+            Sendstream.Write(messageBytes, 0, messageBytes.Length);
+            Int32 bytes = Receivestream.Read(data, 0, data.Length);
             responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
             Debug.Log(responseData);
 
@@ -104,11 +152,11 @@ public class gameManager : MonoBehaviour
         Byte[] data = new Byte[1024];
         try
         {
-            Int32 bytes = stream.Read(data, 0, data.Length);
+            Int32 bytes = Receivestream.Read(data, 0, data.Length);
             responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
             Debug.Log(responseData);
             byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes("OK");
-            stream.Write(messageBytes, 0, messageBytes.Length);
+            Sendstream.Write(messageBytes, 0, messageBytes.Length);
         }
         catch (Exception e)
         {
