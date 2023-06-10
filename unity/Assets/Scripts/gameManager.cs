@@ -120,13 +120,18 @@ public class gameManager : MonoBehaviour
 
     public void JoinGame()
     {
+        Debug.Log("sending data from unity to python");
+
         string responseData;
         Byte[] data = new Byte[1024];
         try
         {
             Debug.Log("sending data from unity to python");
-            byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes("/Join,"+RoomID.text.Trim());
-            if (RoomID.text=="")
+            responseData = "/Join," + RoomID.text.Trim();
+            byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(responseData);
+            Debug.Log(responseData);
+
+            if (RoomID.text == "")
             {
                 return;
             }
@@ -140,8 +145,10 @@ public class gameManager : MonoBehaviour
         try
         {
             Int32 bytes = Receivestream.Read(data, 0, data.Length);
+            Debug.Log("receiv data from unity to python to join room");
+
             responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            if(responseData=="false")
+            if (responseData == "false")
             {
                 return;
             }
