@@ -19,6 +19,12 @@ def connect_handler():
 
 @sio.event
 def roomStatus(data):
+    if data['status']=='true':
+        RoomID=data['RoomID']
+        sendServer.send(data['status'].encode('utf-8'))
+        sendServer.send(data['RoomID'].encode('utf-8'))
+    else:
+        sendServer.send(data['status'].encode('utf-8'))
     print(data)
 
 
@@ -70,6 +76,8 @@ def unityReceive():
                             pass
                         elif func == '/Create':
                             sio.emit('CreateRoom')
+                        elif func == '/Join':
+                            sio.emit('joinRoom',{'RoomID':data})
                             ...
                     except:
                         counter += 1
