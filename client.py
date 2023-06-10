@@ -19,6 +19,7 @@ def connect_handler():
 
 @sio.event
 def roomStatus(data):
+    global RoomID
     if data['status']=='true':
         RoomID=data['RoomID']
         sendServer.send(data['status'].encode('utf-8'))
@@ -62,7 +63,7 @@ def unityReceive():
             S.listen(5)
             conn, adress = S.accept()
             sendServer=conn
-            print('unity connected to python')
+            print('unity receive connected to python')
             counter = 0
             while True:
                 data = conn.recv(1024).decode('utf-8')
@@ -73,18 +74,17 @@ def unityReceive():
                         if func == "Coords":
                             x, z = data.split(',')
                             sio.emit('testunity', {'x': x, 'z': z})
-                            pass
                         elif func == '/Create':
                             sio.emit('CreateRoom')
                         elif func == '/Join':
+                            print(data)
                             sio.emit('joinRoom',{'RoomID':data})
-                            ...
                     except:
                         counter += 1
                         print(counter)
                         pass
     except:
-        pass
+        print('error')
 
 
 def unitySend():
@@ -98,7 +98,7 @@ def unitySend():
             S.listen(5)
             conn, adress = S.accept()
             sendServer = conn
-            print('unity connected to python')
+            print('unity send connected to python')
             counter = 0
             while True:
                     ...
