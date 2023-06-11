@@ -1,15 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using System;
-using System.Net;
 using UnityEngine.SceneManagement;
 using System.Net.Sockets;
 using UnityEngine;
-using System.Threading.Tasks;
 using TMPro;
 
 public class gameManager : MonoBehaviour
 {
+    public List<playercustomclass> playerlist = new List<playercustomclass>();
+    public List<string> chat = new List<string>();
     public TMP_InputField RoomID;
     public string gameID = "123412s";
     private const string serverAddress = "127.0.0.1";
@@ -100,25 +99,27 @@ public class gameManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("unable to send");
+            Debug.LogError("unable to send" + e);
         }
 
         try
         {
             Int32 bytes = Receivestream.Read(data, 0, data.Length);
             responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            array = responseData.Split(',',2);
-            if(array[0]=="true"){
-            Debug.Log("Created a game with code" + responseData);
-            gameID = array[1];
+            array = responseData.Split(',', 2);
+            if (array[0] == "true")
+            {
+                Debug.Log("Created a game with code" + responseData);
+                gameID = array[1];
             }
-            else if(array[0]=="false"){
+            else if (array[0] == "false")
+            {
                 return;
             }
         }
         catch (Exception e)
         {
-            Debug.Log("error in receiving");
+            Debug.Log("error in receiving" + e);
         }
 
         SceneManager.LoadScene(1, LoadSceneMode.Single);
@@ -147,7 +148,7 @@ public class gameManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("unable to send");
+            Debug.LogError("unable to send" + e);
         }
 
         try
@@ -166,7 +167,7 @@ public class gameManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log("error in receiving");
+            Debug.Log("error in receiving " + e);
         }
 
         Debug.Log(RoomID.text);
@@ -175,10 +176,7 @@ public class gameManager : MonoBehaviour
         // SceneManager.LoadScene(1, LoadSceneMode.Single);
 
     }
-    private async Task WaitOneSecondAsync()
-    {
-        await Task.Delay(TimeSpan.FromMilliseconds(2000));
-    }
+
     public void sendata(String responseData)
     {
         Byte[] data = new Byte[1024];
@@ -212,6 +210,16 @@ public class gameManager : MonoBehaviour
         {
             Debug.LogError("Error connecting to the server: " + e.Message);
         }
+
+    }
+    public class playercustomclass
+    {
+        public string playername;
+        public bool isadmin;
+        
+        public Color carcolor;
+
+
 
     }
 }

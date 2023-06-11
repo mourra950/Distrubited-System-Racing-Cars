@@ -11,8 +11,8 @@ using System.Threading;
 
 public class ChatManager : MonoBehaviour
 {
+    Thread backgroundThread;
     public bool newchat = true;
-    List<string> chat = new List<string>();
     public TMP_InputField chatInput;
     public TMP_InputField chatOutput;
     List<String> chatList = new List<string>();
@@ -28,7 +28,6 @@ public class ChatManager : MonoBehaviour
     async void Awake()
     {
 
-        Debug.Log("Looking for a server");
         while (true)
         {
             try
@@ -43,12 +42,15 @@ public class ChatManager : MonoBehaviour
         }
         stream = client.GetStream();
         DontDestroyOnLoad(this);
-        Thread backgroundThread = new Thread(new ThreadStart(receiveMessages));
+        backgroundThread = new Thread(new ThreadStart(receiveMessages));
         backgroundThread.Start();
 
     }
 
-
+    void OnApplicationQuit()
+    {
+        backgroundThread.Abort();
+    }
     public void Start()
     {
         gamestate = GameObject.Find("sceneManager");
@@ -86,7 +88,7 @@ public class ChatManager : MonoBehaviour
                 if (chatInput.text.Trim() != "")
                 {
                     sendata(senddata);
-                    chat.Add("YOU :: " + chatInput.text.Trim());
+                    gameManager.chat.Add("YOU :: " + chatInput.text.Trim());
 
                 }
                 chatInput.text = "";
@@ -114,7 +116,7 @@ public class ChatManager : MonoBehaviour
     public void Showmessages()
     {
         string allchat = string.Empty;
-        foreach (var chater in chat)
+        foreach (var chater in gameManager.chat)
         {
             allchat += chater + "\n";
         }
@@ -132,7 +134,7 @@ public class ChatManager : MonoBehaviour
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                 Debug.Log("Message received from another server" + responseData);
-                chat.Add(responseData);
+                gameManager.chat.Add(responseData);
                 newchat = true;
 
             }
