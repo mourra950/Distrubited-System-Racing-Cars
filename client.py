@@ -7,7 +7,7 @@ import keyboard
 # standard Python
 sio = socketio.Client()
 sendServer = None
-
+UserID=None
 RoomID = None
 unityChatSocket = None
 
@@ -19,9 +19,10 @@ def connect_handler():
 
 @sio.event
 def roomStatus(data):
-    global RoomID
-    if data['status']=='true':
-        RoomID=data['RoomID']
+    global RoomID,UserID
+    if data['status'] == 'true':
+        RoomID = data['RoomID']
+        UserID=data['userID']
         sendServer.send(data['status'].encode('utf-8'))
         sendServer.send(data['RoomID'].encode('utf-8'))
     else:
@@ -30,24 +31,37 @@ def roomStatus(data):
 
 
 @sio.event
+def playerjoined(data):
+    global unityChatSocket
+    print("player joined lobby")
+    print(data['playerIDs'])
+    msg = '/Joined,'+data['playerIDs']
+    # Send received data from server to unity
+    unityChatSocket.send(msg.encode('utf-8'))
+
+
+@sio.event
 def ChatBroadcast(data):
     global unityChatSocket
     print("the data received from sio")
     # Send received data from server to unity
     unityChatSocket.send(data['msg'].encode('utf-8'))
+
+
 @sio.on('*')
 def catch_all(event, data):
-    print('all handlers',event,data)
+    print('all handlers', event, data)
+
 
 @sio.event
 def createRoomStatus(data):
-    global sendServer,RoomID
-    if data['status']=='true':
+    global sendServer, RoomID
+    if data['status'] == 'true':
         msg = "true,"+data['ID']
         sendServer.send(msg.encode('utf-8'))
-        RoomID=data['ID']
+        RoomID = data['ID']
         print(data)
-    elif data['status']=='false':
+    elif data['status'] == 'false':
         msg = "false,"+data['ID']
         sendServer.send(msg.encode('utf-8'))
         print(data)
@@ -70,7 +84,7 @@ def unityReceive():
             S.bind((ADRESS, PORTReceive))
             S.listen(5)
             conn, adress = S.accept()
-            sendServer=conn
+            sendServer = conn
             print('unity receive connected to python')
             counter = 0
             while True:
@@ -78,15 +92,14 @@ def unityReceive():
                 if data:
                     try:
                         func, data = data.split(sep=',', maxsplit=1)
-                        
-                        if func == "Coords":
-                            x, z = data.split(',')
-                            sio.emit('testunity', {'x': x, 'z': z})
+
+                        if func == "/Coord":
+                            sio.emit('Coord', {'data': data, 'RoomID': RoomID})
                         elif func == '/Create':
-                            sio.emit('CreateRoom',{'RoomID':data})
+                            sio.emit('CreateRoom', {'RoomID': data})
                         elif func == '/Join':
                             print(data)
-                            sio.emit('joinRoom',{'RoomID':data})
+                            sio.emit('joinRoom', {'RoomID': data})
                     except:
                         counter += 1
                         print(counter)
@@ -109,11 +122,11 @@ def unitySend():
             print('unity send connected to python')
             counter = 0
             while True:
-                    ...
-                    # conn.send('ahmed'.encode('utf-8'))
-                    # data = conn.recv(1024).decode('utf-8')
-                    # if data == "OK":
-                    # print("Ok")
+                ...
+                # conn.send('ahmed'.encode('utf-8'))
+                # data = conn.recv(1024).decode('utf-8')
+                # if data == "OK":
+                # print("Ok")
                 # counter += 1
     except:
         pass
