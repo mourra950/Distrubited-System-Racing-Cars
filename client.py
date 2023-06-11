@@ -25,15 +25,16 @@ def roomStatus(data):
         UserID = data['userID']
         sendServer.send(data['status'].encode('utf-8'))
         sendServer.send(data['RoomID'].encode('utf-8'))
+        sio.emit('refreshplayers', {'RoomID': RoomID})
+
     else:
         sendServer.send(data['status'].encode('utf-8'))
     print(data)
 
 
 @sio.event
-def playerjoined(data):
+def refresh(data):
     global unityChatSocket
-    print("player joined lobby")
     print(data['playerIDs'])
     msg = '/Joined,'+data['playerIDs']
     # Send received data from server to unity
