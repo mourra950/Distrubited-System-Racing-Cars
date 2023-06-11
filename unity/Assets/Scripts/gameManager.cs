@@ -110,7 +110,7 @@ public class gameManager : MonoBehaviour
             array = responseData.Split(',',2);
             if(array[0]=="true"){
             Debug.Log("Created a game with code" + responseData);
-            gameID = responseData;
+            gameID = array[1];
             }
             else if(array[0]=="false"){
                 return;
