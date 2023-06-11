@@ -19,8 +19,15 @@ io.on("connection", (socket) => {
 
   socket.on("CreateRoom", (data) => {
     console.log(socket.id)
-    socket.join(data.RoomID)
-    socket.emit('createRoomStatus', { 'ID': data.RoomID })
+    const rooms = io.of("/").adapter.rooms;
+
+    if(!(rooms.has(data.RoomID))){
+      socket.join(data.RoomID)
+      socket.emit('createRoomStatus', { 'status':'true','ID': data.RoomID})
+    }
+    else{
+      socket.emit('createRoomStatus', {'status':'false','ID':data.RoomID})
+    }
   })
 
   socket.on("joinRoom", (data) => {
