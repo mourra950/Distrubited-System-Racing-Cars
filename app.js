@@ -21,12 +21,12 @@ io.on("connection", (socket) => {
     console.log(socket.id)
     const rooms = io.of("/").adapter.rooms;
 
-    if(!(rooms.has(data.RoomID))){
+    if (!(rooms.has(data.RoomID))) {
       socket.join(data.RoomID)
-      socket.emit('createRoomStatus', { 'status':'true','ID': data.RoomID})
+      socket.emit('createRoomStatus', { 'status': 'true', 'ID': data.RoomID })
     }
-    else{
-      socket.emit('createRoomStatus', {'status':'false','ID':data.RoomID})
+    else {
+      socket.emit('createRoomStatus', { 'status': 'false', 'ID': data.RoomID })
     }
   })
 
@@ -37,7 +37,14 @@ io.on("connection", (socket) => {
 
     if (rooms.has(data.RoomID)) {
       socket.join(data.RoomID)
-      socket.emit('roomStatus', { 'status': 'true', 'RoomID': data.RoomID })
+      socket.emit('roomStatus', { 'status': 'true', 'RoomID': data.RoomID, 'userID': socket.id })
+      msg = ''
+      rooms.get(data.RoomID).map((id) => {
+        msg += id + ','
+      })
+      console.log(msg)
+      io.in(data.RoomID).emit('playerjoined', { 'playerIDs': msg })
+
     }
     else {
       socket.emit('roomStatus', { 'status': 'false' })
@@ -49,7 +56,9 @@ io.on("connection", (socket) => {
     console.log("user disconnected");
   });
 
-
+  socket.on("Coord", (data) => {
+    socket.to(data.RoomID).emit('CoordBroadcast', { 'carname': socket.id, 'Coord': data.data })
+  })
 
 
   socket.on("ChatRoom", (data) => {
@@ -61,7 +70,7 @@ io.on("connection", (socket) => {
     if (rooms.has(data.RoomID)) {
       if (rooms.get(data.RoomID).has(socket.id)) {
         console.log("Chat accessed");
-        socket.to(data.RoomID).emit('ChatBroadcast', { 'msg': socket.id+" :: "+data.msg })
+        socket.to(data.RoomID).emit('ChatBroadcast', { 'msg': socket.id + " :: " + data.msg })
       }
     }
   })
