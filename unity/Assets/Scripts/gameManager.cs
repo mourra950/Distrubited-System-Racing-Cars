@@ -123,10 +123,6 @@ public class gameManager : MonoBehaviour
         }
 
         SceneManager.LoadScene(1, LoadSceneMode.Single);
-        receivedata();
-
-
-
     }
 
     public void JoinGame()
@@ -174,7 +170,6 @@ public class gameManager : MonoBehaviour
 
         Debug.Log(RoomID.text);
         SceneManager.LoadScene(1, LoadSceneMode.Single);
-        receivedata();
         // SceneManager.LoadScene(1, LoadSceneMode.Single);
 
     }
@@ -198,45 +193,17 @@ public class gameManager : MonoBehaviour
     {
         string responseData = string.Empty;
         Byte[] data = new Byte[1024];
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        try
         {
-            while (SceneManager.GetActiveScene().buildIndex == 1)
-            {
-                try
-                {
-                    Receivestream.Read(data, 0, data.Length);
-                    responseData = System.Text.Encoding.ASCII.GetString(data, 0, data.Length);
-                    string[] players = responseData.Split(',', 2)[1].Split(',');
-                    if (responseData.Split(',', 2)[0] == "/Coord")
-                    {
-                        playerlist.Clear();
-                        for (int i = 0; i < players.Length; i++)
-                        {
-                            playerlist.Add(new playercustomclass(players[i]));
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError("Error connecting to the server: " + e.Message);
-                }
-            }
+            Receivestream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.ASCII.GetString(data, 0, data.Length);
+            Debug.Log(responseData);
         }
-        else
+        catch (Exception e)
         {
-            try
-            {
-                Receivestream.Read(data, 0, data.Length);
-                responseData = System.Text.Encoding.ASCII.GetString(data, 0, data.Length);
-                Debug.Log(responseData);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("Error connecting to the server: " + e.Message);
-            }
-            return responseData;
+            Debug.LogError("Error connecting to the server: " + e.Message);
         }
-        return "empty";
+        return responseData;
     }
 
     public class playercustomclass
