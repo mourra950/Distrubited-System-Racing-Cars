@@ -45,7 +45,7 @@ def refresh(data):
 def ChatBroadcast(data):
     global unityChatSocket
     print("the data received from sio")
-    msg='/Msg,'+data['msg']
+    msg = '/Msg,'+data['msg']
     # Send received data from server to unity
     unityChatSocket.send(msg.encode('utf-8'))
 
@@ -160,7 +160,7 @@ def Chat():
 # https://race-car.onrender.com/
 # 'http://localhost:3000'
 if __name__ == '__main__':
-    sio.connect('https://race-car.onrender.com/')
+    sio.connect('http://localhost:3000')
     thread1 = threading.Thread(target=unityReceive)
     thread2 = threading.Thread(target=unitySend)
     # sio.emit('Chat', {'RoomID': RoomID, 'msg': 'Success my Dude'})
