@@ -7,7 +7,7 @@ import keyboard
 # standard Python
 sio = socketio.Client()
 sendServer = None
-UserID=None
+UserID = None
 RoomID = None
 unityChatSocket = None
 
@@ -19,10 +19,10 @@ def connect_handler():
 
 @sio.event
 def roomStatus(data):
-    global RoomID,UserID
+    global RoomID, UserID
     if data['status'] == 'true':
         RoomID = data['RoomID']
-        UserID=data['userID']
+        UserID = data['userID']
         sendServer.send(data['status'].encode('utf-8'))
         sendServer.send(data['RoomID'].encode('utf-8'))
     else:
@@ -44,8 +44,9 @@ def playerjoined(data):
 def ChatBroadcast(data):
     global unityChatSocket
     print("the data received from sio")
+    msg='/Msg,'+data['msg']
     # Send received data from server to unity
-    unityChatSocket.send(data['msg'].encode('utf-8'))
+    unityChatSocket.send(msg.encode('utf-8'))
 
 
 @sio.on('*')
