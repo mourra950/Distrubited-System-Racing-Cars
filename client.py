@@ -77,7 +77,7 @@ def unityReceive():
                             x, z = data.split(',')
                             sio.emit('testunity', {'x': x, 'z': z})
                         elif func == '/Create':
-                            sio.emit('CreateRoom',{'RoomID':'roomOmar'})
+                            sio.emit('CreateRoom',{'RoomID':data})
                         elif func == '/Join':
                             print(data)
                             sio.emit('joinRoom',{'RoomID':data})
