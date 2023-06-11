@@ -93,7 +93,8 @@ public class gameManager : MonoBehaviour
         try
         {
             Debug.Log("sending data from unity to python");
-            byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes("/Create,a");
+            responseData = "/Create," + RoomID.text.Trim();
+            byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(responseData);
             Sendstream.Write(messageBytes, 0, messageBytes.Length);
         }
         catch (Exception e)
