@@ -11,6 +11,8 @@ using System.Threading;
 
 public class ChatManager : MonoBehaviour
 {
+    public bool newchat = true;
+    List<string> chat = new List<string>();
     public TMP_InputField chatInput;
     public TMP_InputField chatOutput;
     List<String> chatList = new List<string>();
@@ -65,8 +67,11 @@ public class ChatManager : MonoBehaviour
     }
     public void Update()
     {
-
-
+        if (newchat)
+        {
+            Showmessages();
+            newchat = false;
+        }
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             if (chatInput.isFocused == false)
@@ -77,10 +82,12 @@ public class ChatManager : MonoBehaviour
             }
             else
             {
-                string senddata="/Message,"+chatInput.text.Trim();
+                string senddata = "/Message," + chatInput.text.Trim();
                 if (chatInput.text.Trim() != "")
                 {
                     sendata(senddata);
+                    chat.Add("YOU :: " + chatInput.text.Trim());
+
                 }
                 chatInput.text = "";
                 chatInput.DeactivateInputField();
@@ -96,12 +103,22 @@ public class ChatManager : MonoBehaviour
             Debug.Log("sending data from unity to python");
             byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(responseData);
             stream.Write(messageBytes, 0, messageBytes.Length);
+            newchat = true;
         }
         catch (Exception e)
         {
             Debug.LogError("Error connecting to the server: " + e.Message);
         }
 
+    }
+    public void Showmessages()
+    {
+        string allchat = string.Empty;
+        foreach (var chater in chat)
+        {
+            allchat += chater + "\n";
+        }
+        chatOutput.text = allchat;
     }
     public void receiveMessages()
     {
@@ -115,6 +132,9 @@ public class ChatManager : MonoBehaviour
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                 Debug.Log("Message received from another server" + responseData);
+                chat.Add(responseData);
+                newchat = true;
+
             }
             catch (Exception e)
             {
@@ -123,6 +143,7 @@ public class ChatManager : MonoBehaviour
                 if (counter > 2000)
                     break;
             }
+
         }
     }
 }
