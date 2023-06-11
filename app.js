@@ -38,19 +38,24 @@ io.on("connection", (socket) => {
     if (rooms.has(data.RoomID)) {
       socket.join(data.RoomID)
       socket.emit('roomStatus', { 'status': 'true', 'RoomID': data.RoomID, 'userID': socket.id })
-      msg = ''
-      rooms.get(data.RoomID).map((id) => {
-        msg += id + ','
-      })
-      console.log(msg)
-      io.in(data.RoomID).emit('playerjoined', { 'playerIDs': msg })
-
     }
     else {
       socket.emit('roomStatus', { 'status': 'false' })
     }
     //socket.join();
   })
+
+  socket.on("refreshplayers", (data) => {
+    msg = ''
+    rooms.get(data.RoomID).map((id) => {
+      msg += id + ','
+    })
+    console.log(msg)
+    io.in(data.RoomID).emit('refresh', { 'playerIDs': msg })
+    //socket.join();
+  })
+
+
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
@@ -65,8 +70,6 @@ io.on("connection", (socket) => {
     const rooms = io.of("/").adapter.rooms;
     console.log(data)
     console.log(rooms)
-    console.log(rooms.get(data.RoomID).has(socket.id))
-    console.log(data.RoomID)
     if (rooms.has(data.RoomID)) {
       if (rooms.get(data.RoomID).has(socket.id)) {
         console.log("Chat accessed");
