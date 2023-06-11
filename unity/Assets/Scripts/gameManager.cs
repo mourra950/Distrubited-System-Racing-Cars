@@ -123,6 +123,8 @@ public class gameManager : MonoBehaviour
         }
 
         SceneManager.LoadScene(1, LoadSceneMode.Single);
+        receivedata();
+
 
 
     }
@@ -172,22 +174,19 @@ public class gameManager : MonoBehaviour
 
         Debug.Log(RoomID.text);
         SceneManager.LoadScene(1, LoadSceneMode.Single);
-
+        receivedata();
         // SceneManager.LoadScene(1, LoadSceneMode.Single);
 
     }
 
-    public void sendata(String responseData)
+    async public void sendata(String responseData)
     {
         Byte[] data = new Byte[1024];
         try
         {
             byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(responseData);
-            Sendstream.Write(messageBytes, 0, messageBytes.Length);
-            Int32 bytes = Receivestream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            await Sendstream.WriteAsync(messageBytes, 0, messageBytes.Length);
             Debug.Log(responseData);
-
         }
         catch (Exception e)
         {
@@ -195,29 +194,62 @@ public class gameManager : MonoBehaviour
         }
 
     }
-    public void receivedata(String responseData)
+    public string receivedata()
     {
+        string responseData = string.Empty;
         Byte[] data = new Byte[1024];
-        try
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            Int32 bytes = Receivestream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            Debug.Log(responseData);
-            byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes("OK");
-            Sendstream.Write(messageBytes, 0, messageBytes.Length);
+            while (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                try
+                {
+                    Receivestream.Read(data, 0, data.Length);
+                    responseData = System.Text.Encoding.ASCII.GetString(data, 0, data.Length);
+                    string[] players = responseData.Split(',', 2)[1].Split(',');
+                    if (responseData.Split(',', 2)[0] == "/Coord")
+                    {
+                        playerlist.Clear();
+                        for (int i = 0; i < players.Length; i++)
+                        {
+                            playerlist.Add(new playercustomclass(players[i]));
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("Error connecting to the server: " + e.Message);
+                }
+            }
         }
-        catch (Exception e)
+        else
         {
-            Debug.LogError("Error connecting to the server: " + e.Message);
+            try
+            {
+                Receivestream.Read(data, 0, data.Length);
+                responseData = System.Text.Encoding.ASCII.GetString(data, 0, data.Length);
+                Debug.Log(responseData);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error connecting to the server: " + e.Message);
+            }
+            return responseData;
         }
-
+        return "empty";
     }
+
     public class playercustomclass
     {
         public string playername;
         public bool isadmin;
-        
+
         public Color carcolor;
+
+        public playercustomclass(string name)
+        {
+            playername = name; // Set the initial value for model
+        }
 
 
 
