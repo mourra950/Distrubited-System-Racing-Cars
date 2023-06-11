@@ -42,9 +42,15 @@ def catch_all(event, data):
 @sio.event
 def createRoomStatus(data):
     global sendServer,RoomID
-    sendServer.send(data['ID'].encode('utf-8'))
-    RoomID=data['ID']
-    print(data)
+    if data['status']=='true':
+        msg = "true,"+data['ID']
+        sendServer.send(msg.encode('utf-8'))
+        RoomID=data['ID']
+        print(data)
+    elif data['status']=='false':
+        msg = "false,"+data['ID']
+        sendServer.send(msg.encode('utf-8'))
+        print(data)
 
 
 # Press PAGE UP then PAGE DOWN to type "foobar".
