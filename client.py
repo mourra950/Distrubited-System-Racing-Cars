@@ -160,7 +160,7 @@ def Chat():
 # https://race-car.onrender.com/
 # 'http://localhost:3000'
 if __name__ == '__main__':
-    sio.connect('http://localhost:3000')
+    sio.connect('https://race-car.onrender.com/')
     thread1 = threading.Thread(target=unityReceive)
     thread2 = threading.Thread(target=unitySend)
     # sio.emit('Chat', {'RoomID': RoomID, 'msg': 'Success my Dude'})
