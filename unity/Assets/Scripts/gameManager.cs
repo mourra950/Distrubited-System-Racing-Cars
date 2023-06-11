@@ -86,6 +86,7 @@ public class gameManager : MonoBehaviour
 
     public void CreateGame()
     {
+        string[] array;
         string responseData;
         Byte[] data = new Byte[1024];
 
@@ -106,8 +107,14 @@ public class gameManager : MonoBehaviour
         {
             Int32 bytes = Receivestream.Read(data, 0, data.Length);
             responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            array = responseData.Split(',',2);
+            if(array[0]=="true"){
             Debug.Log("Created a game with code" + responseData);
             gameID = responseData;
+            }
+            else if(array[0]=="false"){
+                return;
+            }
         }
         catch (Exception e)
         {
