@@ -33,6 +33,7 @@ io.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
     const rooms = io.of("/").adapter.rooms;
 
+
     console.log(rooms)
 
     if (rooms.has(data.RoomID)) {
@@ -46,10 +47,12 @@ io.on("connection", (socket) => {
   })
 
   socket.on("refreshplayers", (data) => {
+    const rooms = io.of("/").adapter.rooms;
     msg = ''
-    rooms.get(data.RoomID).map((id) => {
+    rooms.get(data.RoomID).forEach((id) => {
       msg += id + ','
     })
+    msg=msg.slice(0,-1)
     console.log(msg)
     io.in(data.RoomID).emit('refresh', { 'playerIDs': msg })
     //socket.join();
