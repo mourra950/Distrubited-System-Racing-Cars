@@ -89,6 +89,7 @@ def emitting(value):
 
 
 def unityReceive():
+    global UserID,RoomID
     try:
         while True:
             ADRESS = "127.0.0.1"
