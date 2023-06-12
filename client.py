@@ -34,11 +34,11 @@ def roomStatus(data):
 
 @sio.event
 def refresh(data):
-    global unityChatSocket
+    global sendServer
     print(data['playerIDs'])
     msg = '/Joined,'+data['playerIDs']
     # Send received data from server to unity
-    unityChatSocket.send(msg.encode('utf-8'))
+    sendServer.send(msg.encode('utf-8'))
 
 
 @sio.event
