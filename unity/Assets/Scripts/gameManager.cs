@@ -22,6 +22,8 @@ public class gameManager : MonoBehaviour
     Thread backgroundreceiveThread;
 
     bool connectionSuccess = false;
+    bool gamestarted = false;
+
     TcpClient unitySend = new TcpClient();
     TcpClient unityReceive = new TcpClient();
 
@@ -65,6 +67,11 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        if (gamestarted)
+        {
+            SceneManager.LoadScene(2, LoadSceneMode.Single);
+            gamestarted = false;
+        }
         /*if (connectionSuccess)
         {
             String responseData = String.Empty;
@@ -217,11 +224,11 @@ public class gameManager : MonoBehaviour
 
                     }
                 }
-                else if((responseData.Split(',', 2)[0] == "/Startgame"))
+                else if ((responseData.Split(',', 2)[0] == "/Startgame"))
                 {
-                
-                    SceneManager.LoadScene(2, LoadSceneMode.Single);
 
+
+                    gamestarted = true;
                 }
 
                 Debug.Log(responseData);
@@ -233,9 +240,9 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    void startgame()
+    public void startgame()
     {
-        string msg="/Start,"+gameID;
+        string msg = "/Start," + gameID;
         sendata(msg);
     }
     public class playercustomclass

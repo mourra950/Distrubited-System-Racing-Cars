@@ -121,6 +121,11 @@ public class ChatManager : MonoBehaviour
             allchat += tempchat[i] + "\n";
         chatOutput.text = allchat;
     }
+
+    public void startgame()
+    {
+        gameManager.startgame();
+    }
     public void receiveMessages()
     {
         int counter = 0;

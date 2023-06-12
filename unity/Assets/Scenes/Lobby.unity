@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 221978861}
   - component: {fileID: 221978860}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Startgame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -206,7 +206,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 221978861}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 319299677}
+        m_TargetAssemblyTypeName: ChatManager, Assembly-CSharp
+        m_MethodName: startgame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &221978861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283dba2263d9d2f47ab030ac30f81055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newchat: 1
   chatInput: {fileID: 1173440167}
   chatOutput: {fileID: 540770762}
   gamestate: {fileID: 0}
