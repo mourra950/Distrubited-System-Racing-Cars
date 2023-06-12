@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 public class gameManager : MonoBehaviour
 {
     public List<string> playertestlist = new List<string>();
+    public List<GameObject> playerReference = new List<GameObject>();
     public List<playercustomclass> playerlist = new List<playercustomclass>();
     public List<string> chat = new List<string>();
     public TMP_InputField RoomID;
@@ -231,6 +232,19 @@ public class gameManager : MonoBehaviour
                         playertestlist.Add(players[i]);
 
                     }
+                }
+                else if(responseData.Split(',', 2)[0] == "/NCoord")
+                {
+                   string tempuserID= responseData.Split(',', 2)[1].Split(',',2)[0];
+                   string[] temparray= playertestlist.ToArray();
+                   for(int i =0;i<temparray.Length;i++)
+                   {
+                    if(playerReference[i].name==tempuserID)
+                    {
+                        Debug.Log(playerReference[i].name);
+                    }
+                   }
+                    
                 }
                 else if ((responseData.Split(',', 2)[0] == "/Startgame"))
                 {

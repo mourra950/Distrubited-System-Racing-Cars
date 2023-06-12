@@ -28,12 +28,14 @@ public class gamelogic : MonoBehaviour
 
         string[] temparray = gameManager.playertestlist.ToArray();
         //for loop for instantiating
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < temparray.Length; i++)
         {
-            if (gameManager.UserID != temparray[i])
+            Debug.Log(i+" attempt");
+            if (!(temparray[i].Contains(gameManager.UserID)))
             {
-                tempcar = (GameObject)Instantiate(carwithoutcontroller, new Vector3(5.2f - (i * 0.5f), 0.2f, -3 - (i * 0.2f)), Quaternion.identity);
+                tempcar = (GameObject)Instantiate(carwithoutcontroller, new Vector3(5.2f, 0.2f, -3), Quaternion.identity);
                 tempcar.name = temparray[i];
+                gameManager.playerReference.Add(tempcar);
             }
 
         }
@@ -44,7 +46,8 @@ public class gamelogic : MonoBehaviour
     {
         //sending car coordinates
         string coordmessage = "/Coord," + mycar.transform.position.x.ToString("0.00") + "," + mycar.transform.position.y.ToString("0.00") + "," + mycar.transform.position.z.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.x.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.y.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.z.ToString("0.00");
-        Debug.Log(coordmessage);
+        gameManager.sendata(coordmessage);
+        // Debug.Log(coordmessage);
         // gameManager.sendata("/Coord,"+);
 
 
