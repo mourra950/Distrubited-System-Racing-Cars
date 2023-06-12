@@ -69,7 +69,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("Coord", (data) => {
-    socket.to(data.RoomID).emit('CoordBroadcast', { 'carname': socket.id, 'Coord': data.data })
+    socket.to(data.RoomID).emit('CoordBroadcast', { 'UserID': data.UserID, 'msg': data.data})
   })
 
 
