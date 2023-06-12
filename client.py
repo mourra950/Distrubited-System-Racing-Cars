@@ -91,7 +91,7 @@ def emitting(value):
 
 
 def unityReceive():
-    global UserID,RoomID
+    global UserID, RoomID
     try:
         while True:
             ADRESS = "127.0.0.1"
@@ -110,7 +110,6 @@ def unityReceive():
                         func, data = data.split(sep=',', maxsplit=1)
 
                         if func == "/Coord":
-                            print(UserID)
                             sio.emit(
                                 'Coord', {
                                     'msg': data,
@@ -196,8 +195,4 @@ if __name__ == '__main__':
     thread3.start()
 
 
-def senddata():
-    global unityChatSocket
-    sio.emit('Chat', {'RoomID': RoomID, 'msg': 'Success my Dude'})
-    print("ahemd")
-    counter = 0
+
