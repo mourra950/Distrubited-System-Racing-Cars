@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 public class gameManager : MonoBehaviour
 {
+
     public List<string> playertestlist = new List<string>();
     public List<GameObject> playerReference = new List<GameObject>();
     public List<playercustomclass> playerlist = new List<playercustomclass>();
@@ -25,6 +26,10 @@ public class gameManager : MonoBehaviour
     public string UserID;
     bool connectionSuccess = false;
     bool gamestarted = false;
+    bool receivedcoord = false;
+
+    string tempcoord;
+
 
     TcpClient unitySend = new TcpClient();
     TcpClient unityReceive = new TcpClient();
@@ -73,6 +78,20 @@ public class gameManager : MonoBehaviour
         {
             SceneManager.LoadScene(2, LoadSceneMode.Single);
             gamestarted = false;
+        }
+        if (receivedcoord == true)
+        {
+            Debug.Log("Finally");
+            string tempuserID = tempcoord.Split(',', 2)[0];
+            string[] temparray = playertestlist.ToArray();
+            for (int i = 0; i < temparray.Length; i++)
+            {
+                if (playerReference[i].name == tempuserID)
+                {
+                    Debug.Log(playerReference[i].name);
+                }
+            }
+
         }
         /*if (connectionSuccess)
         {
@@ -233,18 +252,14 @@ public class gameManager : MonoBehaviour
 
                     }
                 }
-                else if(responseData.Split(',', 2)[0] == "/NCoord")
+                else if (responseData.Split(',', 2)[0] == "/NCoord")
                 {
-                   string tempuserID= responseData.Split(',', 2)[1].Split(',',2)[0];
-                   string[] temparray= playertestlist.ToArray();
-                   for(int i =0;i<temparray.Length;i++)
-                   {
-                    if(playerReference[i].name==tempuserID)
+                    if (receivedcoord == false)
                     {
-                        Debug.Log(playerReference[i].name);
+                        tempcoord = responseData.Split(',', 2)[1];
+                        receivedcoord = true;
                     }
-                   }
-                    
+
                 }
                 else if ((responseData.Split(',', 2)[0] == "/Startgame"))
                 {
