@@ -18,7 +18,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("CreateRoom", (data) => {
-    console.log(socket.id)
     const rooms = io.of("/").adapter.rooms;
 
     if (!(rooms.has(data.RoomID))) {
@@ -53,7 +52,6 @@ io.on("connection", (socket) => {
       msg += id + ','
     })
     msg = msg.slice(0, -1)
-    console.log(msg)
     io.in(data.RoomID).emit('refresh', { 'playerIDs': msg })
     //socket.join();
   })
@@ -69,18 +67,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("Coord", (data) => {
-    console.log()
     socket.to(data.RoomID).emit('CoordBroadcast', { 'UserID': data.UserID, 'msg': data.msg})
   })
 
 
   socket.on("ChatRoom", (data) => {
     const rooms = io.of("/").adapter.rooms;
-    console.log(data)
-    console.log(rooms)
     if (rooms.has(data.RoomID)) {
       if (rooms.get(data.RoomID).has(socket.id)) {
-        console.log("Chat accessed");
         socket.to(data.RoomID).emit('ChatBroadcast', { 'msg': socket.id + " :: " + data.msg })
       }
     }
