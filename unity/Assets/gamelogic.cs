@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Threading;
+using System.Net;
+using System.Threading.Tasks;
 public class gamelogic : MonoBehaviour
 {
     public GameObject gamestate;
@@ -11,9 +13,11 @@ public class gamelogic : MonoBehaviour
     public GameObject mycar;
     public GameObject tempcar;
 
-
+    bool sleepbool = false;
     public GameObject carwithoutcontroller;
     gameManager gameManager;
+    Thread sleepthread;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,16 +43,21 @@ public class gamelogic : MonoBehaviour
             }
 
         }
+        sleepthread = new Thread(sleepcounter);
+        sleepthread.Start();
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
         //sending car coordinates
-        if (Input.GetKeyDown(KeyCode.RightControl))
+        if (sleepbool == true)
         {
             string coordmessage = "/Coord," + mycar.transform.position.x.ToString("0.00") + "," + mycar.transform.position.y.ToString("0.00") + "," + mycar.transform.position.z.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.x.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.y.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.z.ToString("0.00");
             gameManager.sendata(coordmessage);
+            sleepbool = false;
             // Debug.Log(coordmessage);
             // gameManager.sendata("/Coord,"+);
 
@@ -57,6 +66,20 @@ public class gamelogic : MonoBehaviour
 
 
         // gameManager.receivedata();
+
+    }
+    void sleepcounter()
+    {
+        while (true)
+        {
+            if (sleepbool == false)
+            {
+                Thread.Sleep(100);
+                sleepbool = true;
+            }
+
+
+        }
 
     }
 }

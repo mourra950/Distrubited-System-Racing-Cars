@@ -80,20 +80,23 @@ public class gameManager : MonoBehaviour
             gamestarted = false;
         }
         if (receivedcoord == true)
-        {   
+        {
             Debug.Log("Finally");
             string tempuserID = tempcoord.Split(',', 2)[0];
             string[] temparray = playertestlist.ToArray();
-            for (int i = 0; i < temparray.Length; i++)
-            {   
+            for (int i = 0; i < temparray.Length - 1; i++)
+            {
                 Debug.Log(temparray.Length);
                 Debug.Log(i);
                 if (playerReference[i].name == tempuserID)
                 {
                     Debug.Log(playerReference[i].name);
+                    string[] tempvalues = tempcoord.Split(',', 2)[1].Split(',');
+                    playerReference[i].transform.position = new Vector3(float.Parse(tempvalues[0]), float.Parse(tempvalues[1]), float.Parse(tempvalues[2]));
+
                 }
             }
-            receivedcoord=false;
+            receivedcoord = false;
 
         }
         /*if (connectionSuccess)
