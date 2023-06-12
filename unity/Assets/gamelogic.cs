@@ -30,7 +30,7 @@ public class gamelogic : MonoBehaviour
         //for loop for instantiating
         for (int i = 0; i < temparray.Length; i++)
         {
-            Debug.Log(i+" attempt");
+            Debug.Log(i + " attempt");
             if (!(temparray[i].Contains(gameManager.UserID)))
             {
                 tempcar = (GameObject)Instantiate(carwithoutcontroller, new Vector3(5.2f, 0.2f, -3), Quaternion.identity);
@@ -45,12 +45,14 @@ public class gamelogic : MonoBehaviour
     void Update()
     {
         //sending car coordinates
-        string coordmessage = "/Coord," + mycar.transform.position.x.ToString("0.00") + "," + mycar.transform.position.y.ToString("0.00") + "," + mycar.transform.position.z.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.x.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.y.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.z.ToString("0.00");
-        gameManager.sendata(coordmessage);
-        // Debug.Log(coordmessage);
-        // gameManager.sendata("/Coord,"+);
+        if (Input.GetKeyDown(KeyCode.RightControl))
+        {
+            string coordmessage = "/Coord," + mycar.transform.position.x.ToString("0.00") + "," + mycar.transform.position.y.ToString("0.00") + "," + mycar.transform.position.z.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.x.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.y.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.z.ToString("0.00");
+            gameManager.sendata(coordmessage);
+            // Debug.Log(coordmessage);
+            // gameManager.sendata("/Coord,"+);
 
-
+        }
 
 
 
