@@ -58,7 +58,11 @@ io.on("connection", (socket) => {
     //socket.join();
   })
 
-
+  socket.on("StartGame", (data) => {
+    
+    io.in(data.RoomID).emit('GameStarted')
+    //socket.join();
+  })
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
