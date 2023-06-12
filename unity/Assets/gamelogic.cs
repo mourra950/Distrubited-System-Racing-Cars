@@ -9,23 +9,31 @@ public class gamelogic : MonoBehaviour
     public GameObject camerawithfollow;
 
     public GameObject mycar;
+    public GameObject tempcar;
+
 
     public GameObject carwithoutcontroller;
     gameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
-        /*
-                gamestate = GameObject.Find("sceneManager");
-                gameManager = gamestate.GetComponent<gameManager>();
-                gameManager.playerlist.Add(new gameManager.playercustomclass());
-                gameManager.playerlist[0].carcolor = new Color(0.5f, 1, 1);
-          */
-        //for loop for instantiating
+
+        gamestate = GameObject.Find("sceneManager");
+        gameManager = gamestate.GetComponent<gameManager>();
+
+
         mycar = (GameObject)Instantiate(carwithcontroller, new Vector3(5.2f, 0.1f, -3), Quaternion.identity);
         Instantiate(camerawithfollow, new Vector3(5.2f, 0.1f + 0.2f, -3 + 2), Quaternion.identity);
         mycar.name = "Omar";
 
+        //for loop for instantiating
+        for (int i = 0; i < 2; i++)
+        {
+
+            tempcar = (GameObject)Instantiate(carwithoutcontroller, new Vector3(5.2f-(i*1), 0.1f-(i*1), -3-(i*1)), Quaternion.identity);
+            tempcar.name = "temp"+i;
+
+        }
     }
 
     // Update is called once per frame

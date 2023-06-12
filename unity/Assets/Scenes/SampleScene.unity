@@ -2901,7 +2901,8 @@ MonoBehaviour:
   gamestate: {fileID: 0}
   carwithcontroller: {fileID: 642287924342879162, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
   camerawithfollow: {fileID: 8167975972601079846, guid: 86ded3be0ad9d9b4488fa5adef0ebf8f, type: 3}
-  carwithoutcontroller: {fileID: 0}
+  mycar: {fileID: 0}
+  carwithoutcontroller: {fileID: 642287924342879162, guid: 97208fbe343d2454599c53bf0bdf00df, type: 3}
 --- !u!1001 &1740404094
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -198,31 +198,46 @@ public class gameManager : MonoBehaviour
     }
     public void receivedata()
     {
-        string responseData = string.Empty;
-        Byte[] data = new Byte[1024];
-        try
+        while (true)
         {
-            Receivestream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, data.Length);
-            if (responseData.Split(',', 2)[0] == "/Joined")
+            string responseData = string.Empty;
+            Byte[] data = new Byte[1024];
+            try
             {
-                string[] players = responseData.Split(',', 2)[1].Split(',');
-                playerlist.Clear();
-                for (int i = 0; i < players.Length; i++)
+                Receivestream.Read(data, 0, data.Length);
+                responseData = System.Text.Encoding.ASCII.GetString(data, 0, data.Length);
+                if (responseData.Split(',', 2)[0] == "/Joined")
                 {
-                    playerlist.Add(new gameManager.playercustomclass(players[i]));
-                    playertestlist.Add(players[i]);
+                    string[] players = responseData.Split(',', 2)[1].Split(',');
+                    playerlist.Clear();
+                    for (int i = 0; i < players.Length; i++)
+                    {
+                        playerlist.Add(new gameManager.playercustomclass(players[i]));
+                        playertestlist.Add(players[i]);
+
+                    }
+                }
+                else if((responseData.Split(',', 2)[0] == "/Startgame"))
+                {
+                
+                    SceneManager.LoadScene(2, LoadSceneMode.Single);
 
                 }
+
+                Debug.Log(responseData);
             }
-            Debug.Log(responseData);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Error connecting to the server: " + e.Message);
+            catch (Exception e)
+            {
+                Debug.LogError("Error connecting to the server: " + e.Message);
+            }
         }
     }
 
+    void startgame()
+    {
+        string msg="/Start,"+gameID;
+        sendata(msg);
+    }
     public class playercustomclass
     {
         public string playername;
