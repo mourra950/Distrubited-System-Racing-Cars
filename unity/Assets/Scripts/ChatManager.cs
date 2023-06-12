@@ -116,10 +116,9 @@ public class ChatManager : MonoBehaviour
     public void Showmessages()
     {
         string allchat = string.Empty;
-        foreach (var chater in gameManager.chat)
-        {
-            allchat += chater + "\n";
-        }
+        string [] tempchat= gameManager.chat.ToArray();
+        for(int i = tempchat.Length-1;i>=0;i--)
+            allchat += tempchat[i] + "\n";
         chatOutput.text = allchat;
     }
     public void receiveMessages()
