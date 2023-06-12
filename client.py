@@ -39,6 +39,13 @@ def GameStarted():
 
 
 @sio.event
+def CoordBroadcast(data):
+    global sendServer
+    msg = '/NCoord,'+data['UserID']+','+data['msg']
+    sendServer.send(msg.encode('utf-8'))
+
+
+@sio.event
 def refresh(data):
     global sendServer
     print(data['playerIDs'])
@@ -100,7 +107,12 @@ def unityReceive():
                         func, data = data.split(sep=',', maxsplit=1)
 
                         if func == "/Coord":
-                            sio.emit('Coord', {'data': data, 'RoomID': RoomID})
+                            sio.emit(
+                                'Coord', {
+                                    'msg': data,
+                                    'RoomID': RoomID,
+                                    'UserID': UserID
+                                })
                         elif func == '/Create':
                             sio.emit('CreateRoom', {'RoomID': data})
                         elif func == '/Join':
