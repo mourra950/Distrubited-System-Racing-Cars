@@ -80,7 +80,7 @@ public class gameManager : MonoBehaviour
             gamestarted = false;
         }
         if (receivedcoord == true)
-        {
+        {   
             Debug.Log("Finally");
             string tempuserID = tempcoord.Split(',', 2)[0];
             string[] temparray = playertestlist.ToArray();
@@ -91,6 +91,7 @@ public class gameManager : MonoBehaviour
                     Debug.Log(playerReference[i].name);
                 }
             }
+            receivedcoord=false;
 
         }
         /*if (connectionSuccess)
