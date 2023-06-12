@@ -85,7 +85,9 @@ public class gameManager : MonoBehaviour
             string tempuserID = tempcoord.Split(',', 2)[0];
             string[] temparray = playertestlist.ToArray();
             for (int i = 0; i < temparray.Length; i++)
-            {
+            {   
+                Debug.Log(temparray.Length);
+                Debug.Log(i);
                 if (playerReference[i].name == tempuserID)
                 {
                     Debug.Log(playerReference[i].name);
@@ -258,6 +260,9 @@ public class gameManager : MonoBehaviour
                     if (receivedcoord == false)
                     {
                         tempcoord = responseData.Split(',', 2)[1];
+                        Debug.Log("inside receive");
+                        Debug.Log(tempcoord);
+
                         receivedcoord = true;
                     }
 
