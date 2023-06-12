@@ -71,11 +71,12 @@ def catch_all(event, data):
 
 @sio.event
 def createRoomStatus(data):
-    global sendServer, RoomID
+    global sendServer, RoomID, UserID
     if data['status'] == 'true':
         msg = "true,"+data['RoomID']+","+data['UserID']
         sendServer.send(msg.encode('utf-8'))
         RoomID = data['RoomID']
+        UserID = data['UserID']
     elif data['status'] == 'false':
         msg = "false,"+data['RoomID']
         sendServer.send(msg.encode('utf-8'))
@@ -109,6 +110,7 @@ def unityReceive():
                         func, data = data.split(sep=',', maxsplit=1)
 
                         if func == "/Coord":
+                            print(UserID)
                             sio.emit(
                                 'Coord', {
                                     'msg': data,
