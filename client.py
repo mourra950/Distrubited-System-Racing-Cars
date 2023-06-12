@@ -23,16 +23,18 @@ def roomStatus(data):
     if data['status'] == 'true':
         RoomID = data['RoomID']
         UserID = data['userID']
-        sendServer.send(data['status'].encode('utf-8'))
-        sendServer.send(data['RoomID'].encode('utf-8'))
+        msg = 'true,'+RoomID+','+UserID
+        sendServer.send(msg.encode('utf-8'))
         sio.emit('refreshplayers', {'RoomID': RoomID})
 
     else:
-        sendServer.send(data['status'].encode('utf-8'))
+        sendServer.send('false,'.encode('utf-8'))
     print(data)
+
+
 @sio.event
 def GameStarted():
-    msg='/Startgame, '
+    msg = '/Startgame, '
     sendServer.send(msg.encode('utf-8'))
 
 
@@ -63,14 +65,12 @@ def catch_all(event, data):
 def createRoomStatus(data):
     global sendServer, RoomID
     if data['status'] == 'true':
-        msg = "true,"+data['ID']
+        msg = "true,"+data['RoomID']+","+data['UserID']
         sendServer.send(msg.encode('utf-8'))
         RoomID = data['ID']
-        print(data)
     elif data['status'] == 'false':
         msg = "false,"+data['ID']
         sendServer.send(msg.encode('utf-8'))
-        print(data)
 
 
 # Press PAGE UP then PAGE DOWN to type "foobar".
@@ -106,7 +106,7 @@ def unityReceive():
                         elif func == '/Join':
                             print(data)
                             sio.emit('joinRoom', {'RoomID': data})
-                        elif func=="/Start":
+                        elif func == "/Start":
                             sio.emit('StartGame', {'RoomID': RoomID})
 
                     except:
@@ -160,7 +160,7 @@ def Chat():
             if func == "/Message":
                 print(data)
                 sio.emit('ChatRoom', {'RoomID': RoomID, 'msg': data})
-           
+
             else:
                 pass
 
@@ -173,7 +173,6 @@ if __name__ == '__main__':
     thread2 = threading.Thread(target=unitySend)
     # sio.emit('Chat', {'RoomID': RoomID, 'msg': 'Success my Dude'})
     thread3 = threading.Thread(target=Chat)
-
 
     thread1.start()
     thread2.start()
