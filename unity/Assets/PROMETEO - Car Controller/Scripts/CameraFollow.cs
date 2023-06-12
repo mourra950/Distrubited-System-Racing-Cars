@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    public GameObject gamestate;
+
+    gameManager gameManager;
 
     public GameObject carwithcontrols;
     public Transform carTransform;
@@ -20,7 +23,11 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
-        carwithcontrols = GameObject.Find("Omar");
+        gamestate = GameObject.Find("sceneManager");
+        gameManager = gamestate.GetComponent<gameManager>();
+
+
+        carwithcontrols = GameObject.Find(gameManager.UserID);
         carTransform = carwithcontrols.GetComponent<Transform>();
 
 

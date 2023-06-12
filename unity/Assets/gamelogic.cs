@@ -22,16 +22,19 @@ public class gamelogic : MonoBehaviour
         gameManager = gamestate.GetComponent<gameManager>();
 
 
-        mycar = (GameObject)Instantiate(carwithcontroller, new Vector3(5.2f, 0.1f, -3), Quaternion.identity);
+        mycar = (GameObject)Instantiate(carwithcontroller, new Vector3(5.2f, 0.2f, -3), Quaternion.identity);
         Instantiate(camerawithfollow, new Vector3(5.2f, 0.1f + 0.2f, -3 + 2), Quaternion.identity);
-        mycar.name = "Omar";
+        mycar.name = gameManager.UserID;
 
+        string[] temparray = gameManager.playertestlist.ToArray();
         //for loop for instantiating
         for (int i = 0; i < 2; i++)
         {
-
-            tempcar = (GameObject)Instantiate(carwithoutcontroller, new Vector3(5.2f-(i*1), 0.1f-(i*1), -3-(i*1)), Quaternion.identity);
-            tempcar.name = "temp"+i;
+            if (gameManager.UserID != temparray[i])
+            {
+                tempcar = (GameObject)Instantiate(carwithoutcontroller, new Vector3(5.2f - (i * 0.5f), 0.2f, -3 - (i * 0.2f)), Quaternion.identity);
+                tempcar.name = temparray[i];
+            }
 
         }
     }

@@ -21,6 +21,7 @@ public class gameManager : MonoBehaviour
     NetworkStream Sendstream;
     Thread backgroundreceiveThread;
 
+    public string UserID;
     bool connectionSuccess = false;
     bool gamestarted = false;
 
@@ -122,7 +123,9 @@ public class gameManager : MonoBehaviour
             if (array[0] == "true")
             {
                 Debug.Log("Created a game with code" + responseData);
-                gameID = array[1];
+                gameID = array[1].Split(',', 2)[0];
+                UserID = array[1].Split(',', 2)[1];
+
             }
             else if (array[0] == "false")
             {
@@ -168,13 +171,18 @@ public class gameManager : MonoBehaviour
             Debug.Log("receiv data from unity to python to join room");
 
             responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            if (responseData == "false")
+
+            if (responseData.Split(',', 2)[0] == "false")
             {
                 return;
             }
-            bytes = Receivestream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            gameID = responseData;
+            else
+            {
+                UserID = responseData.Split(',', 2)[1].Split(',', 2)[1];
+
+                gameID = responseData.Split(',', 2)[1].Split(',', 2)[0];
+            }
+
         }
         catch (Exception e)
         {
@@ -226,8 +234,6 @@ public class gameManager : MonoBehaviour
                 }
                 else if ((responseData.Split(',', 2)[0] == "/Startgame"))
                 {
-
-
                     gamestarted = true;
                 }
 
