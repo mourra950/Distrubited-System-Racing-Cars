@@ -30,6 +30,10 @@ def roomStatus(data):
     else:
         sendServer.send(data['status'].encode('utf-8'))
     print(data)
+@sio.event
+def GameStarted():
+    msg='/Startgame, '
+    sendServer.send(msg.encode('utf-8'))
 
 
 @sio.event
@@ -102,6 +106,9 @@ def unityReceive():
                         elif func == '/Join':
                             print(data)
                             sio.emit('joinRoom', {'RoomID': data})
+                        elif func=="/Start":
+                            sio.emit('StartGame', {'RoomID': RoomID})
+
                     except:
                         counter += 1
                         print(counter)
@@ -153,6 +160,7 @@ def Chat():
             if func == "/Message":
                 print(data)
                 sio.emit('ChatRoom', {'RoomID': RoomID, 'msg': data})
+           
             else:
                 pass
 
@@ -164,13 +172,10 @@ if __name__ == '__main__':
     thread1 = threading.Thread(target=unityReceive)
     thread2 = threading.Thread(target=unitySend)
     # sio.emit('Chat', {'RoomID': RoomID, 'msg': 'Success my Dude'})
-
     thread3 = threading.Thread(target=Chat)
 
-    # keyboard.add_hotkey('space', lambda: senddata())
 
     thread1.start()
-
     thread2.start()
     # chat thread
     thread3.start()
