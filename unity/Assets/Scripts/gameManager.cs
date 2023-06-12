@@ -4,9 +4,13 @@ using UnityEngine.SceneManagement;
 using System.Net.Sockets;
 using UnityEngine;
 using TMPro;
+using System.Threading;
+using System.Net;
+using System.Threading.Tasks;
 
 public class gameManager : MonoBehaviour
 {
+    public List<string> playertestlist = new List<string>();
     public List<playercustomclass> playerlist = new List<playercustomclass>();
     public List<string> chat = new List<string>();
     public TMP_InputField RoomID;
@@ -15,6 +19,7 @@ public class gameManager : MonoBehaviour
     private const int serverPort = 3003;
     NetworkStream Receivestream;
     NetworkStream Sendstream;
+    Thread backgroundreceiveThread;
 
     bool connectionSuccess = false;
     TcpClient unitySend = new TcpClient();
@@ -53,7 +58,7 @@ public class gameManager : MonoBehaviour
         connectionSuccess = true;
         Receivestream = unityReceive.GetStream();
         Sendstream = unitySend.GetStream();
-
+        backgroundreceiveThread = new Thread(new ThreadStart(receivedata));
         DontDestroyOnLoad(this);
     }
 
@@ -121,6 +126,7 @@ public class gameManager : MonoBehaviour
         {
             Debug.Log("error in receiving" + e);
         }
+        backgroundreceiveThread.Start();
 
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
@@ -169,6 +175,7 @@ public class gameManager : MonoBehaviour
         }
 
         Debug.Log(RoomID.text);
+        backgroundreceiveThread.Start();
         SceneManager.LoadScene(1, LoadSceneMode.Single);
         // SceneManager.LoadScene(1, LoadSceneMode.Single);
 
@@ -189,7 +196,7 @@ public class gameManager : MonoBehaviour
         }
 
     }
-    public string receivedata()
+    public void receivedata()
     {
         string responseData = string.Empty;
         Byte[] data = new Byte[1024];
@@ -197,13 +204,23 @@ public class gameManager : MonoBehaviour
         {
             Receivestream.Read(data, 0, data.Length);
             responseData = System.Text.Encoding.ASCII.GetString(data, 0, data.Length);
+            if (responseData.Split(',', 2)[0] == "/Joined")
+            {
+                string[] players = responseData.Split(',', 2)[1].Split(',');
+                playerlist.Clear();
+                for (int i = 0; i < players.Length; i++)
+                {
+                    playerlist.Add(new gameManager.playercustomclass(players[i]));
+                    playertestlist.Add(players[i]);
+
+                }
+            }
             Debug.Log(responseData);
         }
         catch (Exception e)
         {
             Debug.LogError("Error connecting to the server: " + e.Message);
         }
-        return responseData;
     }
 
     public class playercustomclass
@@ -220,5 +237,10 @@ public class gameManager : MonoBehaviour
 
 
 
+    }
+
+    void OnApplicationQuit()
+    {
+        backgroundreceiveThread.Abort();
     }
 }

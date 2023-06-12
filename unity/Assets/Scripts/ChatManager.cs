@@ -134,16 +134,7 @@ public class ChatManager : MonoBehaviour
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
 
-                if (responseData.Split(',', 2)[0] == "/Joined")
-                {
-                    string[] players = responseData.Split(',', 2)[1].Split(',');
-                    gameManager.playerlist.Clear();
-                    for (int i = 0; i < players.Length; i++)
-                    {
-                        gameManager.playerlist.Add(new gameManager.playercustomclass(players[i]));
-                    }
-                }
-                else if (responseData.Split(',', 2)[0] == "/Msg")
+                if (responseData.Split(',', 2)[0] == "/Msg")
                 {
                     Debug.Log("Message received from another server" + responseData);
                     gameManager.chat.Add(responseData.Split(',', 2)[1]);
