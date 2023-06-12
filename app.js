@@ -26,7 +26,7 @@ io.on("connection", (socket) => {
       socket.emit('createRoomStatus', { 'status': 'true', 'UserID': socket.id, 'RoomID': data.RoomID })
     }
     else {
-      socket.emit('createRoomStatus', { 'status': 'false', 'ID': data.RoomID })
+      socket.emit('createRoomStatus', { 'status': 'false', 'RoomID': data.RoomID })
     }
   })
 
