@@ -23,7 +23,7 @@ io.on("connection", (socket) => {
 
     if (!(rooms.has(data.RoomID))) {
       socket.join(data.RoomID)
-      socket.emit('createRoomStatus', { 'status': 'true', 'ID': data.RoomID })
+      socket.emit('createRoomStatus', { 'status': 'true', 'UserID': socket.id, 'RoomID': data.RoomID })
     }
     else {
       socket.emit('createRoomStatus', { 'status': 'false', 'ID': data.RoomID })
@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
 
     if (rooms.has(data.RoomID)) {
       socket.join(data.RoomID)
-      socket.emit('roomStatus', { 'status': 'true', 'RoomID': data.RoomID, 'userID': socket.id })
+      socket.emit('roomStatus', { 'status': 'true', 'RoomID': data.RoomID, 'UserID': socket.id })
     }
     else {
       socket.emit('roomStatus', { 'status': 'false' })
@@ -52,14 +52,14 @@ io.on("connection", (socket) => {
     rooms.get(data.RoomID).forEach((id) => {
       msg += id + ','
     })
-    msg=msg.slice(0,-1)
+    msg = msg.slice(0, -1)
     console.log(msg)
     io.in(data.RoomID).emit('refresh', { 'playerIDs': msg })
     //socket.join();
   })
 
   socket.on("StartGame", (data) => {
-    
+
     io.in(data.RoomID).emit('GameStarted')
     //socket.join();
   })
