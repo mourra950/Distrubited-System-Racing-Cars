@@ -42,6 +42,7 @@ def GameStarted():
 def CoordBroadcast(data):
     global sendServer
     msg = '/NCoord,'+data['UserID']+','+data['msg']
+    print(msg)
     sendServer.send(msg.encode('utf-8'))
 
 
