@@ -74,11 +74,9 @@ public class gamelogic : MonoBehaviour
         {
             if (sleepbool == false)
             {
-                Thread.Sleep(100);
+                Thread.Sleep(300);
                 sleepbool = true;
             }
-
-
         }
 
     }

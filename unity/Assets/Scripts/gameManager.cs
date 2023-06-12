@@ -93,7 +93,8 @@ public class gameManager : MonoBehaviour
                     Debug.Log(playerReference[i].name);
                     string[] tempvalues = tempcoord.Split(',', 2)[1].Split(',');
                     playerReference[i].transform.position = new Vector3(float.Parse(tempvalues[0]), float.Parse(tempvalues[1]), float.Parse(tempvalues[2]));
-
+                    Quaternion rotation = Quaternion.Euler(float.Parse(tempvalues[3]), float.Parse(tempvalues[4]), float.Parse(tempvalues[5]));
+                    playerReference[i].transform.rotation = rotation;
                 }
             }
             receivedcoord = false;
