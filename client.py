@@ -22,7 +22,7 @@ def roomStatus(data):
     global RoomID, UserID
     if data['status'] == 'true':
         RoomID = data['RoomID']
-        UserID = data['userID']
+        UserID = data['UserID']
         msg = 'true,'+RoomID+','+UserID
         sendServer.send(msg.encode('utf-8'))
         sio.emit('refreshplayers', {'RoomID': RoomID})
@@ -67,9 +67,9 @@ def createRoomStatus(data):
     if data['status'] == 'true':
         msg = "true,"+data['RoomID']+","+data['UserID']
         sendServer.send(msg.encode('utf-8'))
-        RoomID = data['ID']
+        RoomID = data['RoomID']
     elif data['status'] == 'false':
-        msg = "false,"+data['ID']
+        msg = "false,"+data['RoomID']
         sendServer.send(msg.encode('utf-8'))
 
 
