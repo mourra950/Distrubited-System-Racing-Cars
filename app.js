@@ -75,7 +75,7 @@ io.on("connection", (socket) => {
     const rooms = io.of("/").adapter.rooms;
     const query = { "RoomID": data.RoomID };
     res = room_collection.find(query)
-    console.log(res.UserID)
+    console.log(res)
     msg = ''
     rooms.get(data.RoomID).forEach((id) => {
       msg += id + ','
