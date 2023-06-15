@@ -5,6 +5,23 @@ const { Server } = require("socket.io");
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {});
+const MongoClient = require('mongodb').MongoClient
+
+const uri = "mongodb+srv://omarmayousef:G7IQyLiT1OKcn0Lj@cluster0.shg8nan.mongodb.net/?retryWrites=true&w=majority";
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const DBClient = new MongoClient(uri);
+DBClient.connect()
+console.log("DB connected");
+const db = DBClient.db('uuid_db');
+const uuid_collection = db.collection('uuid_coll');
+const room_collection = db.collection('room_coll');
+
+//collection.findOne({'uuid':uuid});
+
+
+
+
+
 
 io.on("connection", (socket) => {
 
@@ -22,6 +39,11 @@ io.on("connection", (socket) => {
 
     if (!(rooms.has(data.RoomID))) {
       socket.join(data.RoomID)
+      const doc = {
+        'RoomID':data.RoomID,
+        "UserID": data.UserID
+      }
+      room_collection.insertOne(doc)
       socket.emit('createRoomStatus', { 'status': 'true', 'UserID': socket.id, 'RoomID': data.RoomID })
     }
     else {
@@ -31,12 +53,16 @@ io.on("connection", (socket) => {
 
   socket.on("joinRoom", (data) => {
     const rooms = io.of("/").adapter.rooms;
-
-
     console.log(rooms)
+
 
     if (rooms.has(data.RoomID)) {
       socket.join(data.RoomID)
+      const doc = {
+        'RoomID':data.RoomID,
+        "UserID": data.UserID
+      }
+      room_collection.insertOne(doc)
       socket.emit('roomStatus', { 'status': 'true', 'RoomID': data.RoomID, 'UserID': socket.id })
     }
     else {
@@ -47,6 +73,7 @@ io.on("connection", (socket) => {
 
   socket.on("refreshplayers", (data) => {
     const rooms = io.of("/").adapter.rooms;
+    const query = { "RoomID": data.RoomID };
     msg = ''
     rooms.get(data.RoomID).forEach((id) => {
       msg += id + ','
