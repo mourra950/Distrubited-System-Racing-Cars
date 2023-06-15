@@ -44,6 +44,11 @@ io.on("connection", (socket) => {
         "UserID": data.UserID
       }
       room_collection.insertOne(doc)
+    const query = { "RoomID": "omar4" };
+    res = room_collection.find(query)
+    for  (const doc of res) {
+      console.log(doc);
+    }
       socket.emit('createRoomStatus', { 'status': 'true', 'UserID': socket.id, 'RoomID': data.RoomID })
     }
     else {
