@@ -3,6 +3,9 @@ from datetime import datetime
 import socket
 import threading
 import keyboard
+from pymongo import MongoClient
+from bson.binary import UuidRepresentation
+from uuid import uuid4
 
 # standard Python
 sio = socketio.Client()
@@ -10,6 +13,18 @@ sendServer = None
 UserID = None
 RoomID = None
 unityChatSocket = None
+
+
+
+URI ='mongodb+srv://omarmayousef:G7IQyLiT1OKcn0Lj@cluster0.shg8nan.mongodb.net/?retryWrites=true&w=majority'
+DBClient = MongoClient(URI,UuidRepresentation='standard')
+collection = DBClient.get_database('uuid_db').get_collection('uuid_coll')
+uuid_obj = uuid4()
+print(uuid_obj)
+collection.insert_one({'uuid': uuid_obj})
+UserID = str(uuid_obj)
+
+debug= True
 
 
 @sio.on('connect')
@@ -22,7 +37,7 @@ def roomStatus(data):
     global RoomID, UserID
     if data['status'] == 'true':
         RoomID = data['RoomID']
-        UserID = data['UserID']
+        # UserID = data['UserID'] #msh 3ayzenha
         msg = 'true,'+RoomID+','+UserID
         sendServer.send(msg.encode('utf-8'))
         sio.emit('refreshplayers', {'RoomID': RoomID})
@@ -73,10 +88,10 @@ def catch_all(event, data):
 def createRoomStatus(data):
     global sendServer, RoomID, UserID
     if data['status'] == 'true':
-        msg = "true,"+data['RoomID']+","+data['UserID']
+        msg = "true,"+data['RoomID']+","+UserID
         sendServer.send(msg.encode('utf-8'))
         RoomID = data['RoomID']
-        UserID = data['UserID']
+        # UserID = data['UserID'] # msh 3ayzenha
     elif data['status'] == 'false':
         msg = "false,"+data['RoomID']
         sendServer.send(msg.encode('utf-8'))
@@ -106,9 +121,12 @@ def unityReceive():
             while True:
                 data = conn.recv(1024).decode('utf-8')
                 if data:
+                    if debug:
+                        print(data)
                     try:
                         func, data = data.split(sep=',', maxsplit=1)
-
+                        if debug:
+                            print(data)
                         if func == "/Coord":
                             sio.emit(
                                 'Coord', {
@@ -117,16 +135,16 @@ def unityReceive():
                                     'UserID': UserID
                                 })
                         elif func == '/Create':
-                            sio.emit('CreateRoom', {'RoomID': data})
+                            sio.emit('CreateRoom', {'RoomID': data,'UserID':UserID})
                         elif func == '/Join':
                             print(data)
-                            sio.emit('joinRoom', {'RoomID': data})
+                            sio.emit('joinRoom', {'RoomID': data,'UserID':UserID})
                         elif func == "/Start":
                             sio.emit('StartGame', {'RoomID': RoomID})
 
-                    except:
-                        counter += 1
-                        print(counter)
+                    except Exception as e:
+                        if debug:
+                            print(e)
                         pass
     except:
         print('error')
@@ -183,7 +201,7 @@ def Chat():
 # https://race-car.onrender.com/
 # 'http://localhost:3000'
 if __name__ == '__main__':
-    sio.connect('https://race-car.onrender.com/')
+    sio.connect('http://localhost:3000')
     thread1 = threading.Thread(target=unityReceive)
     thread2 = threading.Thread(target=unitySend)
     # sio.emit('Chat', {'RoomID': RoomID, 'msg': 'Success my Dude'})
