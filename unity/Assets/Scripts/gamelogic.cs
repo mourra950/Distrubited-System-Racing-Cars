@@ -26,9 +26,7 @@ public class gamelogic : MonoBehaviour
         gameManager = gamestate.GetComponent<gameManager>();
 
 
-        mycar = (GameObject)Instantiate(carwithcontroller, new Vector3(5.2f, 0.2f, -3), Quaternion.identity);
-        Instantiate(camerawithfollow, new Vector3(5.2f, 0.1f + 0.2f, -3 + 2), Quaternion.identity);
-        mycar.name = gameManager.UserID;
+
 
         string[] temparray = gameManager.playertestlist.ToArray();
         //for loop for instantiating
@@ -37,9 +35,15 @@ public class gamelogic : MonoBehaviour
             Debug.Log(i + " attempt");
             if (!(temparray[i].Contains(gameManager.UserID)))
             {
-                tempcar = (GameObject)Instantiate(carwithoutcontroller, new Vector3(5.2f, 0.2f, -3), Quaternion.identity);
+                tempcar = (GameObject)Instantiate(carwithoutcontroller, new Vector3(5.33f, 0.2f, 2.7f), Quaternion.identity);
                 tempcar.name = temparray[i];
                 gameManager.playerReference.Add(tempcar);
+            }
+            else
+            {
+                mycar = (GameObject)Instantiate(carwithcontroller, new Vector3(5.33f, 0.2f, 2.7f), Quaternion.identity);
+                Instantiate(camerawithfollow, new Vector3(5.8f, 0.5f, 2.7f), Quaternion.identity);
+                mycar.name = gameManager.UserID;
             }
 
         }
