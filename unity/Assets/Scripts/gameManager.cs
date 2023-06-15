@@ -218,7 +218,7 @@ public class gameManager : MonoBehaviour
 
         Debug.Log(RoomID.text);
         backgroundreceiveThread.Start();
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        SceneManager.LoadScene(3, LoadSceneMode.Single);
         // SceneManager.LoadScene(1, LoadSceneMode.Single);
 
     }
