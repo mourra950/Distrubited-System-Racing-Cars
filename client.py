@@ -1,21 +1,32 @@
+# imports used during runtime
 import socketio
 from datetime import datetime
 import socket
 import threading
-import keyboard
 
-# standard Python
+
+# socket io handler
 sio = socketio.Client()
+# a handler to send data to unity during runtime using low level sockets
 sendServer = None
-UserID = None
-RoomID = None
+
+# a handler for unity chat low level socket
 unityChatSocket = None
-debug=False
+
+# cache the User ID during game used in excuting certain commands during runtime
+UserID = None
+
+# cache the Room ID during game used in excuting certain commands during runtime
+RoomID = None
+
+
+debug = False
 
 
 @sio.on('connect')
 def connect_handler():
-    print('Connected!')
+    if debug:
+        print('Connected!')
 
 
 @sio.event
@@ -30,7 +41,8 @@ def roomStatus(data):
 
     else:
         sendServer.send('false,'.encode('utf-8'))
-    print(data)
+    if debug:
+        print(data)
 
 
 @sio.event
@@ -51,7 +63,8 @@ def CoordBroadcast(data):
 @sio.event
 def refresh(data):
     global sendServer
-    print(data['playerIDs'])
+    if debug:
+        print(data['playerIDs'])
     msg = '/Joined,'+data['playerIDs']
     # Send received data from server to unity
     sendServer.send(msg.encode('utf-8'))
@@ -67,12 +80,6 @@ def ChatBroadcast(data):
     unityChatSocket.send(msg.encode('utf-8'))
 
 
-@sio.on('*')
-def catch_all(event, data):
-    if debug:
-        print('all handlers', event, data)
-
-
 @sio.event
 def createRoomStatus(data):
     global sendServer, RoomID, UserID
@@ -86,14 +93,6 @@ def createRoomStatus(data):
         sendServer.send(msg.encode('utf-8'))
 
 
-# Press PAGE UP then PAGE DOWN to type "foobar".
-def emitting(value):
-    now = datetime.now()
-    sio.emit('my message', {'msg': value})
-    current_time = now.strftime("%H:%M:%S")
-    print("Current Time =", current_time)
-
-
 def unityReceive():
     global UserID, RoomID
     try:
@@ -105,7 +104,8 @@ def unityReceive():
             S.listen(5)
             conn, adress = S.accept()
             sendServer = conn
-            print('unity receive connected to python')
+            if debug:
+                print('unity receive connected to python')
             counter = 0
             while True:
                 data = conn.recv(1024).decode('utf-8')
@@ -121,19 +121,27 @@ def unityReceive():
                                     'UserID': UserID
                                 })
                         elif func == '/Create':
-                            sio.emit('CreateRoom', {'RoomID': data})
+                            sio.emit('CreateRoom', {
+                                'RoomID': data
+                            })
                         elif func == '/Join':
                             print(data)
-                            sio.emit('joinRoom', {'RoomID': data})
+                            sio.emit('joinRoom', {
+                                'RoomID': data
+                            })
                         elif func == "/Start":
-                            sio.emit('StartGame', {'RoomID': RoomID})
+                            sio.emit('StartGame', {
+                                'RoomID': RoomID
+                            })
 
                     except:
                         counter += 1
-                        print(counter)
+                        if debug:
+                            print(counter)
                         pass
     except:
-        print('error')
+        if debug:
+            print('error')
 
 
 def unitySend():
@@ -147,15 +155,12 @@ def unitySend():
             S.listen(5)
             conn, adress = S.accept()
             sendServer = conn
-            print('unity send connected to python')
+            if debug:
+                print('unity send connected to python')
             counter = 0
+            # loop to keep the thread active and avoid closing the socket connection
             while True:
                 ...
-                # conn.send('ahmed'.encode('utf-8'))
-                # data = conn.recv(1024).decode('utf-8')
-                # if data == "OK":
-                # print("Ok")
-                # counter += 1
     except:
         pass
 
@@ -174,27 +179,35 @@ def Chat():
         while True:
             data = conn.recv(1024).decode('utf-8')
             func, data = data.split(',', maxsplit=1)
-            print(func, data)
+            if debug:
+                print(func, data)
             # broadcast message to all servers
             if func == "/Message":
-                print(data)
+                if debug:
+                    print(data)
                 sio.emit('ChatRoom', {'RoomID': RoomID, 'msg': data})
 
             else:
                 pass
 
 
-# https://race-car.onrender.com/
-# 'http://localhost:3000'
-# http://ec2-54-196-9-211.compute-1.amazonaws.com:3000/
+# Main program entry to start connecting to servers and threading the proccesses
 if __name__ == '__main__':
+
+    # options for connecting to the game server either locally or online on AWS/Render
+    # https://race-car.onrender.com/
+    # http://localhost:3000
+    # http://ec2-54-196-9-211.compute-1.amazonaws.com:3000/
     sio.connect('http://ec2-54-196-9-211.compute-1.amazonaws.com:3000/')
+
+    # thread to receive messages from unity and proccess them
     thread1 = threading.Thread(target=unityReceive)
+    # thread to send and proccess messages from the node server to unity endpoint
     thread2 = threading.Thread(target=unitySend)
-    # sio.emit('Chat', {'RoomID': RoomID, 'msg': 'Success my Dude'})
+    # thread dedicated for the chat managing between the client during and before the game
     thread3 = threading.Thread(target=Chat)
 
+    # Start all the threads
     thread1.start()
     thread2.start()
-    # chat thread
     thread3.start()
