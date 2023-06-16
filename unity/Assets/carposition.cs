@@ -5,7 +5,7 @@ using UnityEngine;
 public class carposition : MonoBehaviour
 {
     public string tempcoord;
-    public float smooth =1;
+    public float smooth = 2f;
     // Start is called before the first frame update
     void Start()
     {

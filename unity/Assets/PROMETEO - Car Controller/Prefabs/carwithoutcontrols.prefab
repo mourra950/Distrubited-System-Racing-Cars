@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tempcoord: 
+  smooth: 100
 --- !u!1 &934883528070179459
 GameObject:
   m_ObjectHideFlags: 0
