@@ -22,33 +22,42 @@ RoomID = None
 
 debug = False
 
+# handle event when user connect
+
 
 @sio.on('connect')
 def connect_handler():
     if debug:
         print('Connected!')
 
+# handle event when user try to join a room
+
 
 @sio.event
 def roomStatus(data):
     global RoomID, UserID
+# if true return the status and the room id to show it on the lobby
     if data['status'] == 'true':
         RoomID = data['RoomID']
         UserID = data['UserID']
         msg = 'true,'+RoomID+','+UserID
         sendServer.send(msg.encode('utf-8'))
         sio.emit('refreshplayers', {'RoomID': RoomID})
-
+# else return false to prevent joining the room
     else:
         sendServer.send('false,'.encode('utf-8'))
     if debug:
         print(data)
+
+# event handler to signal to all players when the game has started from the room creator
 
 
 @sio.event
 def GameStarted():
     msg = '/Startgame, '
     sendServer.send(msg.encode('utf-8'))
+
+# event handler to receive all players coordinates during gameplay to update them on unity
 
 
 @sio.event
@@ -59,6 +68,8 @@ def CoordBroadcast(data):
         print(msg)
     sendServer.send(msg.encode('utf-8'))
 
+# event handler to refresh the list of players on all machines
+
 
 @sio.event
 def refresh(data):
@@ -68,6 +79,8 @@ def refresh(data):
     msg = '/Joined,'+data['playerIDs']
     # Send received data from server to unity
     sendServer.send(msg.encode('utf-8'))
+
+# event handler to get messages during session from all user in the room
 
 
 @sio.event
@@ -80,6 +93,7 @@ def ChatBroadcast(data):
     unityChatSocket.send(msg.encode('utf-8'))
 
 
+# event handler returns the status when creating a room
 @sio.event
 def createRoomStatus(data):
     global sendServer, RoomID, UserID
