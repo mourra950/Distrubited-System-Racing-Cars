@@ -10,6 +10,7 @@ sendServer = None
 UserID = None
 RoomID = None
 unityChatSocket = None
+debug=False
 
 
 @sio.on('connect')
@@ -42,7 +43,8 @@ def GameStarted():
 def CoordBroadcast(data):
     global sendServer
     msg = '/NCoord,'+data['UserID']+','+data['msg']
-    print(msg)
+    if debug:
+        print(msg)
     sendServer.send(msg.encode('utf-8'))
 
 
@@ -58,7 +60,8 @@ def refresh(data):
 @sio.event
 def ChatBroadcast(data):
     global unityChatSocket
-    print("the data received from sio")
+    if debug:
+        print("the data received from sio")
     msg = '/Msg,'+data['msg']
     # Send received data from server to unity
     unityChatSocket.send(msg.encode('utf-8'))
@@ -66,7 +69,8 @@ def ChatBroadcast(data):
 
 @sio.on('*')
 def catch_all(event, data):
-    print('all handlers', event, data)
+    if debug:
+        print('all handlers', event, data)
 
 
 @sio.event
