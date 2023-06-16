@@ -69,6 +69,20 @@ public class ChatManager : MonoBehaviour
     }
     public void Update()
     {
+
+        if (gameManager.scenechanged == true)
+        {
+            chatInput = GameObject.Find("chatInput2").GetComponent<TMP_InputField>();
+            chatOutput = GameObject.Find("chatRead2").GetComponent<TMP_InputField>();
+            if (chatInput is TMP_InputField)
+            {
+                gameManager.scenechanged = false;
+                Debug.Log("new chat inputs and outputs");
+                Showmessages();
+            }
+
+
+        }
         if (newchat)
         {
             Showmessages();
@@ -102,7 +116,7 @@ public class ChatManager : MonoBehaviour
         Byte[] data = new Byte[1024];
         try
         {
-            Debug.Log("sending data from unity to python");
+            // Debug.Log("sending data from unity to python");
             byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(responseData);
             stream.Write(messageBytes, 0, messageBytes.Length);
             newchat = true;
@@ -116,8 +130,8 @@ public class ChatManager : MonoBehaviour
     public void Showmessages()
     {
         string allchat = string.Empty;
-        string [] tempchat= gameManager.chat.ToArray();
-        for(int i = tempchat.Length-1;i>=0;i--)
+        string[] tempchat = gameManager.chat.ToArray();
+        for (int i = tempchat.Length - 1; i >= 0; i--)
             allchat += tempchat[i] + "\n";
         chatOutput.text = allchat;
     }
@@ -140,7 +154,7 @@ public class ChatManager : MonoBehaviour
 
                 if (responseData.Split(',', 2)[0] == "/Msg")
                 {
-                    Debug.Log("Message received from another server" + responseData);
+                    // Debug.Log("Message received from another server" + responseData);
                     gameManager.chat.Add(responseData.Split(',', 2)[1]);
                     newchat = true;
                 }

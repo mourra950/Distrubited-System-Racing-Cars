@@ -27,6 +27,7 @@ public class gameManager : MonoBehaviour
     bool connectionSuccess = false;
     bool gamestarted = false;
     bool receivedcoord = false;
+    public bool scenechanged = false;
 
     string tempcoord;
 
@@ -34,6 +35,10 @@ public class gameManager : MonoBehaviour
     TcpClient unitySend = new TcpClient();
     TcpClient unityReceive = new TcpClient();
 
+    public void Start()
+    {
+        RoomID = GameObject.Find("RoomID").GetComponent<TMP_InputField>();
+    }
     async void Awake()
     {
 
@@ -77,7 +82,9 @@ public class gameManager : MonoBehaviour
         if (gamestarted)
         {
             SceneManager.LoadScene(2, LoadSceneMode.Single);
+            scenechanged = true;
             gamestarted = false;
+
         }
         if (receivedcoord == true)
         {
@@ -90,11 +97,14 @@ public class gameManager : MonoBehaviour
                 Debug.Log(i);
                 if (playerReference[i].name == tempuserID)
                 {
-                    Debug.Log(playerReference[i].name);
-                    string[] tempvalues = tempcoord.Split(',', 2)[1].Split(',');
-                    playerReference[i].transform.position = new Vector3(float.Parse(tempvalues[0]), float.Parse(tempvalues[1]), float.Parse(tempvalues[2]));
-                    Quaternion rotation = Quaternion.Euler(float.Parse(tempvalues[3]), float.Parse(tempvalues[4]), float.Parse(tempvalues[5]));
-                    playerReference[i].transform.rotation = rotation;
+
+                    carposition tempref = playerReference[i].GetComponent<carposition>();
+                    tempref.tempcoord = tempcoord;
+
+                    // string[] tempvalues = tempcoord.Split(',', 2)[1].Split(',');
+                    // playerReference[i].transform.position = new Vector3(float.Parse(tempvalues[0]), float.Parse(tempvalues[1]), float.Parse(tempvalues[2]));
+                    // Quaternion rotation = Quaternion.Euler(float.Parse(tempvalues[3]), float.Parse(tempvalues[4]), float.Parse(tempvalues[5]));
+                    // playerReference[i].transform.rotation = rotation;
                 }
             }
             receivedcoord = false;
@@ -149,7 +159,7 @@ public class gameManager : MonoBehaviour
             array = responseData.Split(',', 2);
             if (array[0] == "true")
             {
-                Debug.Log("Created a game with code" + responseData);
+                Debug.Log("Created a game with code " + responseData);
                 gameID = array[1].Split(',', 2)[0];
                 UserID = array[1].Split(',', 2)[1];
 
@@ -230,7 +240,7 @@ public class gameManager : MonoBehaviour
         {
             byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(responseData);
             await Sendstream.WriteAsync(messageBytes, 0, messageBytes.Length);
-            Debug.Log(responseData);
+            // Debug.Log(responseData);
         }
         catch (Exception e)
         {
@@ -264,8 +274,8 @@ public class gameManager : MonoBehaviour
                     if (receivedcoord == false)
                     {
                         tempcoord = responseData.Split(',', 2)[1];
-                        Debug.Log("inside receive");
-                        Debug.Log(tempcoord);
+                        // Debug.Log("inside receive");
+                        // Debug.Log(tempcoord);
 
                         receivedcoord = true;
                     }
