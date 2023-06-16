@@ -5,21 +5,18 @@ const { Server } = require("socket.io");
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {});
-
+let debug = false;
 io.on("connection", (socket) => {
-
   console.log("a user connected");
+
   socket.on("my message", (msg) => {
-    console.log(msg);
+    if (debug == true) {
+      console.log(msg);
+    }
     socket.broadcast.emit('br', msg);
   });
-  socket.on("testunity", (msg) => {
-    console.log(msg);
-  });
-
   socket.on("CreateRoom", (data) => {
     const rooms = io.of("/").adapter.rooms;
-
     if (!(rooms.has(data.RoomID))) {
       socket.join(data.RoomID)
       socket.emit('createRoomStatus', { 'status': 'true', 'UserID': socket.id, 'RoomID': data.RoomID })
@@ -32,8 +29,8 @@ io.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
     const rooms = io.of("/").adapter.rooms;
 
-
-    console.log(rooms)
+    if (debug == true)
+      console.log(rooms)
 
     if (rooms.has(data.RoomID)) {
       socket.join(data.RoomID)
@@ -57,13 +54,12 @@ io.on("connection", (socket) => {
   })
 
   socket.on("StartGame", (data) => {
-
     io.in(data.RoomID).emit('GameStarted')
-    //socket.join();
   })
 
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    if (debug == true)
+      console.log("user disconnected");
   });
 
   socket.on("Coord", (data) => {
@@ -80,9 +76,6 @@ io.on("connection", (socket) => {
     }
   })
 
-});
-io.of("/").adapter.on("join-room", (room, id) => {
-  console.log(`socket ${id} has joined room ${room}`);
 });
 
 
