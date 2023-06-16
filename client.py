@@ -213,7 +213,7 @@ if __name__ == '__main__':
     # http://localhost:3000
     # http://ec2-54-196-9-211.compute-1.amazonaws.com:3000/
     sio.connect('http://ec2-54-196-9-211.compute-1.amazonaws.com:3000/')
-
+    print("connected")
     # thread to receive messages from unity and proccess them
     thread1 = threading.Thread(target=unityReceive)
     # thread to send and proccess messages from the node server to unity endpoint
