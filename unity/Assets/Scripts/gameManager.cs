@@ -17,12 +17,13 @@ public class gameManager : MonoBehaviour
     public List<string> chat = new List<string>();
     public TMP_InputField RoomID;
     public string gameID = "123412s";
+    public TMP_InputField countField;
     private const string serverAddress = "127.0.0.1";
     private const int serverPort = 3003;
     NetworkStream Receivestream;
     NetworkStream Sendstream;
     Thread backgroundreceiveThread;
-
+    public bool countChanged=true;
     public string UserID;
     bool connectionSuccess = false;
     bool gamestarted = false;
@@ -268,6 +269,9 @@ public class gameManager : MonoBehaviour
                         playertestlist.Add(players[i]);
 
                     }
+                    countChanged = true;
+                    
+
                 }
                 else if (responseData.Split(',', 2)[0] == "/NCoord")
                 {

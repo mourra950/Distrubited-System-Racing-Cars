@@ -20,6 +20,7 @@ public class ChatManager : MonoBehaviour
     public GameObject gamestate;
     gameManager gameManager;
     public TMP_Text RoomID;
+    public TMP_Text countField;
     private const string serverAddress = "127.0.0.1";
     private const int serverPort = 3004;
     NetworkStream stream;
@@ -110,6 +111,11 @@ public class ChatManager : MonoBehaviour
                     chatInput.text = "";
                     chatInput.DeactivateInputField();
                 }
+            }
+            if(gameManager.countChanged==true)
+            {
+                countField.SetText("player count: "+gameManager.playerlist.Count);
+                gameManager.countChanged=false;
             }
         }
         catch (Exception e)
