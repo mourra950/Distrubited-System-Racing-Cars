@@ -70,44 +70,51 @@ public class ChatManager : MonoBehaviour
     public void Update()
     {
 
-        if (gameManager.scenechanged == true)
+        try
         {
-            chatInput = GameObject.Find("chatInput2").GetComponent<TMP_InputField>();
-            chatOutput = GameObject.Find("chatRead2").GetComponent<TMP_InputField>();
-            if (chatInput is TMP_InputField)
+            if (gameManager.scenechanged == true)
             {
-                gameManager.scenechanged = false;
-                Debug.Log("new chat inputs and outputs");
-                Showmessages();
-            }
-
-
-        }
-        if (newchat)
-        {
-            Showmessages();
-            newchat = false;
-        }
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            if (chatInput.isFocused == false)
-            {
-                chatInput.ActivateInputField();
-                chatInput.Select();
-                chatList.Add("ahmed mohamed");
-            }
-            else
-            {
-                string senddata = "/Message," + chatInput.text.Trim();
-                if (chatInput.text.Trim() != "")
+                chatInput = GameObject.Find("chatInput2").GetComponent<TMP_InputField>();
+                chatOutput = GameObject.Find("chatRead2").GetComponent<TMP_InputField>();
+                if (chatInput is TMP_InputField)
                 {
-                    sendata(senddata);
-                    gameManager.chat.Add("YOU :: " + chatInput.text.Trim());
-
+                    gameManager.scenechanged = false;
+                    Debug.Log("new chat inputs and outputs");
+                    Showmessages();
                 }
-                chatInput.text = "";
-                chatInput.DeactivateInputField();
+
+
             }
+            if (newchat)
+            {
+                Showmessages();
+                newchat = false;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                if (chatInput.isFocused == false)
+                {
+                    chatInput.ActivateInputField();
+                    chatInput.Select();
+                    chatList.Add("ahmed mohamed");
+                }
+                else
+                {
+                    string senddata = "/Message," + chatInput.text.Trim();
+                    if (chatInput.text.Trim() != "")
+                    {
+                        sendata(senddata);
+                        gameManager.chat.Add("YOU :: " + chatInput.text.Trim());
+
+                    }
+                    chatInput.text = "";
+                    chatInput.DeactivateInputField();
+                }
+            }
+        }
+        catch (Exception e)
+        {
+
         }
 
     }
