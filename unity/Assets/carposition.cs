@@ -5,6 +5,7 @@ using UnityEngine;
 public class carposition : MonoBehaviour
 {
     public string tempcoord;
+    public float smooth =1;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,7 @@ public class carposition : MonoBehaviour
         if (tempcoord != "")
         {
             string[] tempvalues = tempcoord.Split(',', 2)[1].Split(',');
-            this.transform.position = Vector3.MoveTowards(transform.position, new Vector3(float.Parse(tempvalues[0]), float.Parse(tempvalues[1]), float.Parse(tempvalues[2])), 20 * Time.deltaTime);
+            this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(float.Parse(tempvalues[0]), float.Parse(tempvalues[1]), float.Parse(tempvalues[2])), smooth * Time.deltaTime);
             Quaternion rotation = Quaternion.Euler(float.Parse(tempvalues[3]), float.Parse(tempvalues[4]), float.Parse(tempvalues[5]));
             this.transform.rotation = rotation;
         }
