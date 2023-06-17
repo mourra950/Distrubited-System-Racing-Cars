@@ -81,8 +81,8 @@ def GameStarted():
 def CoordBroadcast(data):
     global sendServer
     msg = '/NCoord,'+data['UserID']+','+data['msg']
-    if debug:
-        print(msg)
+    # if debug:
+        # print(msg)
     sendServer.send(msg.encode('utf-8'))
 
 # event handler to refresh the list of players on all machines
