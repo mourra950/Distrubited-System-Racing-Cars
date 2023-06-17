@@ -37,7 +37,7 @@ public class CameraFollow : MonoBehaviour
         absoluteInitCameraPosition = initialCameraPosition - initialCarPosition;
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         //Look at car
         Vector3 _lookDirection = (new Vector3(carTransform.position.x, carTransform.position.y, carTransform.position.z)) - transform.position;

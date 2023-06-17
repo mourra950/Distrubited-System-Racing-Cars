@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 2885994972245028409}
   - component: {fileID: 5427945241289411123}
   - component: {fileID: 7974315439356997021}
-  - component: {fileID: 3100228412978695328}
   m_Layer: 0
-  m_Name: Camerawithfollow
+  m_Name: CameraSpectate
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,22 +92,3 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8167975972601079846}
   m_Enabled: 1
---- !u!114 &3100228412978695328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8167975972601079846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f6d3ff905719c845a4a6404bc4d4162, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gamestate: {fileID: 0}
-  carwithcontrols: {fileID: 0}
-  carTransform: {fileID: 0}
-  followSpeed: 5.03
-  lookSpeed: 8.28
-  elevation: {x: 0, y: 0.44, z: 0}
-  cardistance: 0.8

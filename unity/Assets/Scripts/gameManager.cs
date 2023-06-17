@@ -5,8 +5,6 @@ using System.Net.Sockets;
 using UnityEngine;
 using TMPro;
 using System.Threading;
-using System.Net;
-using System.Threading.Tasks;
 
 public class gameManager : MonoBehaviour
 {
@@ -16,25 +14,28 @@ public class gameManager : MonoBehaviour
     public List<playercustomclass> playerlist = new List<playercustomclass>();
     public List<string> chat = new List<string>();
     public TMP_InputField RoomID;
-    public string gameID = "123412s";
     public TMP_InputField countField;
-    private const string serverAddress = "127.0.0.1";
-    private const int serverPort = 3003;
-    NetworkStream Receivestream;
-    NetworkStream Sendstream;
-    Thread backgroundreceiveThread;
-    public bool countChanged=true;
+
+    public string gameID = "123412s";
     public string UserID;
+    public bool countChanged = true;
+    public bool scenechanged = false;
     bool connectionSuccess = false;
     bool gamestarted = false;
     bool receivedcoord = false;
-    public bool scenechanged = false;
+    public bool _isplayer = true;
+
 
     string tempcoord;
 
 
     TcpClient unitySend = new TcpClient();
     TcpClient unityReceive = new TcpClient();
+    NetworkStream Receivestream;
+    NetworkStream Sendstream;
+
+    private const string serverAddress = "127.0.0.1";
+    Thread backgroundreceiveThread;
 
     public void Start()
     {
@@ -102,36 +103,11 @@ public class gameManager : MonoBehaviour
                     carposition tempref = playerReference[i].GetComponent<carposition>();
                     tempref.tempcoord = tempcoord;
 
-                    // string[] tempvalues = tempcoord.Split(',', 2)[1].Split(',');
-                    // playerReference[i].transform.position = new Vector3(float.Parse(tempvalues[0]), float.Parse(tempvalues[1]), float.Parse(tempvalues[2]));
-                    // Quaternion rotation = Quaternion.Euler(float.Parse(tempvalues[3]), float.Parse(tempvalues[4]), float.Parse(tempvalues[5]));
-                    // playerReference[i].transform.rotation = rotation;
                 }
             }
             receivedcoord = false;
 
         }
-        /*if (connectionSuccess)
-        {
-            String responseData = String.Empty;
-            Byte[] data = new Byte[256];
-            try
-            {
-                Int32 bytes = stream.Read(data, 0, data.Length);
-                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes("OK");
-                stream.Write(messageBytes, 0, messageBytes.Length);
-                Debug.Log(responseData);
-
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("Error connecting to the server: " + e.Message);
-            }
-
-        }
-        */
-        // Send the message to the server
     }
 
     public void CreateGame()
@@ -188,7 +164,7 @@ public class gameManager : MonoBehaviour
         try
         {
             Debug.Log("sending data from unity to python");
-            responseData = "/Join," + RoomID.text.Trim();
+            responseData = "/Join," + RoomID.text.Trim() + "," + "true";
             byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(responseData);
             Debug.Log(responseData);
 
@@ -226,12 +202,10 @@ public class gameManager : MonoBehaviour
         {
             Debug.Log("error in receiving " + e);
         }
-
+        _isplayer = false;
         Debug.Log(RoomID.text);
         backgroundreceiveThread.Start();
         SceneManager.LoadScene(3, LoadSceneMode.Single);
-        // SceneManager.LoadScene(1, LoadSceneMode.Single);
-
     }
 
     async public void sendata(String responseData)
@@ -270,7 +244,7 @@ public class gameManager : MonoBehaviour
 
                     }
                     countChanged = true;
-                    
+
 
                 }
                 else if (responseData.Split(',', 2)[0] == "/NCoord")
@@ -319,7 +293,58 @@ public class gameManager : MonoBehaviour
 
 
     }
+    public void SpectateGame()
+    {
 
+        string responseData;
+        Byte[] data = new Byte[1024];
+        try
+        {
+            responseData = "/Join," + RoomID.text.Trim() + "," + "false";
+            byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(responseData);
+            Debug.Log(responseData);
+
+            if (RoomID.text == "")
+            {
+                return;
+            }
+            Sendstream.Write(messageBytes, 0, messageBytes.Length);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("unable to send" + e);
+        }
+
+        try
+        {
+            Int32 bytes = Receivestream.Read(data, 0, data.Length);
+            Debug.Log("receiv data from unity to python to join room");
+
+            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+
+            if (responseData.Split(',', 2)[0] == "false")
+            {
+                return;
+            }
+            else
+            {
+                UserID = responseData.Split(',', 2)[1].Split(',', 2)[1];
+
+                gameID = responseData.Split(',', 2)[1].Split(',', 2)[0];
+            }
+
+        }
+        catch (Exception e)
+        {
+            Debug.Log("error in receiving " + e);
+        }
+
+        Debug.Log(RoomID.text);
+        backgroundreceiveThread.Start();
+        SceneManager.LoadScene(3, LoadSceneMode.Single);
+        // SceneManager.LoadScene(1, LoadSceneMode.Single);
+
+    }
     void OnApplicationQuit()
     {
         backgroundreceiveThread.Abort();

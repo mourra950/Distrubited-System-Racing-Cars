@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using System.Threading;
-using System.Net;
-using System.Threading.Tasks;
 public class gamelogic : MonoBehaviour
 {
     public GameObject gamestate;
     public GameObject carwithcontroller;
     public GameObject camerawithfollow;
+    public GameObject cameraspectate;
+
 
     public GameObject mycar;
     public GameObject tempcar;
@@ -26,11 +25,16 @@ public class gamelogic : MonoBehaviour
         gameManager = gamestate.GetComponent<gameManager>();
 
 
-
-        mycar = (GameObject)Instantiate(carwithcontroller, new Vector3(5.33f, 0.5f, 2.7f), Quaternion.identity);
-        mycar.name = gameManager.UserID;
-        Instantiate(camerawithfollow, new Vector3(5.8f, 0.5f, 2.7f), Quaternion.identity);
-
+        if (gameManager._isplayer == true)
+        {
+            mycar = (GameObject)Instantiate(carwithcontroller, new Vector3(5.33f, 0.5f, 2.7f), Quaternion.identity);
+            mycar.name = gameManager.UserID;
+            Instantiate(camerawithfollow, new Vector3(5.8f, 0.5f, 2.7f), Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(cameraspectate, new Vector3(0, 11.4f, 1.4f), Quaternion.identity);
+        }
         string[] temparray = gameManager.playertestlist.ToArray();
         //for loop for instantiating
         for (int i = 0; i < temparray.Length; i++)
@@ -53,23 +57,19 @@ public class gamelogic : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //sending car coordinates
-        if (sleepbool == true)
+        if (gameManager._isplayer == true)
         {
-            string coordmessage = "/Coord," + mycar.transform.position.x.ToString("0.00") + "," + mycar.transform.position.y.ToString("0.00") + "," + mycar.transform.position.z.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.x.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.y.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.z.ToString("0.00");
-            gameManager.sendata(coordmessage);
-            sleepbool = false;
-            // Debug.Log(coordmessage);
-            // gameManager.sendata("/Coord,"+);
-
+            if (sleepbool == true)
+            {
+                string coordmessage = "/Coord," + mycar.transform.position.x.ToString("0.00") + "," + mycar.transform.position.y.ToString("0.00") + "," + mycar.transform.position.z.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.x.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.y.ToString("0.00") + "," + mycar.transform.rotation.eulerAngles.z.ToString("0.00");
+                gameManager.sendata(coordmessage);
+                sleepbool = false;
+            }
         }
 
 
-
-        // gameManager.receivedata();
 
     }
     void sleepcounter()

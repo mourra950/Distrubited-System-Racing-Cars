@@ -69,7 +69,7 @@ Transform:
   - {fileID: 6399581921715410368}
   - {fileID: 901333272}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &5135156708204615449
 Rigidbody:
@@ -112,11 +112,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 74
   maxReverseSpeed: 29
-  accelerationMultiplier: 4
-  maxSteeringAngle: 15
-  steeringSpeed: 0.301
-  brakeForce: 521
-  decelerationMultiplier: 4
+  accelerationMultiplier: 3
+  maxSteeringAngle: 11
+  steeringSpeed: 0.155
+  brakeForce: 334
+  decelerationMultiplier: 2
   handbrakeDriftMultiplier: 6
   bodyMassCenter: {x: 0, y: 0, z: 0}
   frontLeftMesh: {fileID: 8649133034589738184}
