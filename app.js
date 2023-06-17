@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
 
   socket.on("ChatRoom", (data) => {
     const rooms = io.of("/").adapter.rooms;
-    if (rooms.has(data.RoomID)) {
+    if (rooms.has(data.RoomID+"WatchRoom")) {
       if (rooms.get(data.RoomID).has(socket.id)) {
         socket.to(data.RoomID + "WatchRoom").emit('ChatBroadcast', { 'msg': socket.id + " :: " + data.msg })
       }
