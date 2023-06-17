@@ -91,22 +91,39 @@ public class gameManager : MonoBehaviour
         if (receivedcoord == true)
         {
             Debug.Log("Finally");
-            string tempuserID = tempcoord.Split(',', 2)[0];
+            string tempuserID = tempcoord.Split(',', 2)[0].Trim();
             string[] temparray = playertestlist.ToArray();
-            for (int i = 0; i < temparray.Length - 1; i++)
+            if (_isplayer == true)
             {
-                Debug.Log(temparray.Length);
-                Debug.Log(i);
-                if (playerReference[i].name == tempuserID)
+                for (int i = 0; i < temparray.Length - 1; i++)
                 {
 
-                    carposition tempref = playerReference[i].GetComponent<carposition>();
-                    tempref.tempcoord = tempcoord;
+                    if (playerReference[i].name == tempuserID)
+                    {
 
+                        carposition tempref = playerReference[i].GetComponent<carposition>();
+                        tempref.tempcoord = tempcoord;
+
+                    }
                 }
+                receivedcoord = false;
             }
-            receivedcoord = false;
+            else
+            {
 
+                for (int i = 0; i < temparray.Length; i++)
+                {
+
+                    if (playerReference[i].name == tempuserID)
+                    {
+
+                        carposition tempref = playerReference[i].GetComponent<carposition>();
+                        tempref.tempcoord = tempcoord;
+
+                    }
+                }
+                receivedcoord = false;
+            }
         }
     }
 
@@ -252,7 +269,7 @@ public class gameManager : MonoBehaviour
                     {
                         tempcoord = responseData.Split(',', 2)[1];
                         // Debug.Log("inside receive");
-                        // Debug.Log(tempcoord);
+                        Debug.Log(tempcoord);
 
                         receivedcoord = true;
                     }

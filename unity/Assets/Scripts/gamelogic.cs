@@ -46,9 +46,7 @@ public class gamelogic : MonoBehaviour
                 tempcar.name = temparray[i];
                 gameManager.playerReference.Add(tempcar);
             }
-            else
-            {
-            }
+
 
         }
         sleepthread = new Thread(sleepcounter);
