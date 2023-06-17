@@ -11,7 +11,7 @@ io.on("connection", (socket) => {
 
   socket.on("CreateRoom", (data) => {
     const rooms = io.of("/").adapter.rooms;
-    if (!(rooms.has(data.RoomID))) {
+    if (!(rooms.has(data.RoomID)) && !(rooms.has(data.RoomID + "WatchRoom"))) {
       socket.join(data.RoomID)
       socket.join(data.RoomID + "WatchRoom")
       socket.emit('createRoomStatus', { 'status': 'true', 'UserID': socket.id, 'RoomID': data.RoomID })
@@ -20,6 +20,8 @@ io.on("connection", (socket) => {
       socket.emit('createRoomStatus', { 'status': 'false', 'RoomID': data.RoomID })
     }
   })
+
+
 
   socket.on("joinRoom", (data) => {
     const rooms = io.of("/").adapter.rooms;
@@ -45,7 +47,8 @@ io.on("connection", (socket) => {
   })
 
 
-
+//watch all 
+//room players
   socket.on("refreshplayers", (data) => {
     const rooms = io.of("/").adapter.rooms;
     msg = ''
