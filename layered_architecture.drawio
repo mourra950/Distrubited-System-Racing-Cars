@@ -1,0 +1,52 @@
+<mxfile host="app.diagrams.net" modified="2023-06-16T23:11:38.592Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.43" etag="EniCUmGQj5kXI3JjNRYd" version="21.4.0" type="device">
+  <diagram name="Page-1" id="5f0bae14-7c28-e335-631c-24af17079c00">
+    <mxGraphModel dx="1615" dy="894" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="39150e848f15840c-1" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Presentation Tier&lt;br&gt;Unity Game&lt;/font&gt;" style="verticalAlign=top;align=center;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="340" y="20" width="330" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="39150e848f15840c-2" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Proxy Tier&lt;br&gt;Python client&lt;/font&gt;" style="verticalAlign=top;align=center;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="340" y="310" width="330" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-pyz9ASDv6i4jBI1yX-3" value="" style="image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/computer_and_terminals/Personal_Computer.svg;" vertex="1" parent="1">
+          <mxGeometry x="471.47" y="90" width="67.07" height="90.9" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-pyz9ASDv6i4jBI1yX-6" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Server Tier&lt;br&gt;Node.js Server&lt;/font&gt;" style="verticalAlign=top;align=center;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="340" y="600" width="330" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-pyz9ASDv6i4jBI1yX-7" value="" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/generic_server.svg;" vertex="1" parent="1">
+          <mxGeometry x="477" y="680" width="56" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-pyz9ASDv6i4jBI1yX-10" value="" style="endArrow=classic;html=1;rounded=0;entryX=1.012;entryY=0.823;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0.823;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="590" y="243" as="sourcePoint" />
+            <mxPoint x="590" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ia-pyz9ASDv6i4jBI1yX-11" value="" style="endArrow=classic;html=1;rounded=0;entryX=1.012;entryY=0.823;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0.823;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="590" y="530" as="sourcePoint" />
+            <mxPoint x="590" y="597" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ia-pyz9ASDv6i4jBI1yX-12" value="" style="endArrow=classic;html=1;rounded=0;entryX=1.012;entryY=0.823;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0.823;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="600" as="sourcePoint" />
+            <mxPoint x="400" y="533" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ia-pyz9ASDv6i4jBI1yX-13" value="" style="pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#4495D1;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.veeam.2d.proxy;" vertex="1" parent="1">
+          <mxGeometry x="477.01000000000005" y="390" width="67.4" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-pyz9ASDv6i4jBI1yX-14" value="" style="endArrow=classic;html=1;rounded=0;entryX=1.012;entryY=0.823;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0.823;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="310" as="sourcePoint" />
+            <mxPoint x="400" y="243" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
