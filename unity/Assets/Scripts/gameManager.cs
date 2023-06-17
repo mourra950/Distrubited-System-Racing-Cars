@@ -202,7 +202,6 @@ public class gameManager : MonoBehaviour
         {
             Debug.Log("error in receiving " + e);
         }
-        _isplayer = false;
         Debug.Log(RoomID.text);
         backgroundreceiveThread.Start();
         SceneManager.LoadScene(3, LoadSceneMode.Single);
@@ -338,7 +337,7 @@ public class gameManager : MonoBehaviour
         {
             Debug.Log("error in receiving " + e);
         }
-
+        _isplayer = false;
         Debug.Log(RoomID.text);
         backgroundreceiveThread.Start();
         SceneManager.LoadScene(3, LoadSceneMode.Single);
