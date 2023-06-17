@@ -1061,7 +1061,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 984645975}
         m_TargetAssemblyTypeName: gameManager, Assembly-CSharp
-        m_MethodName: JoinGame
+        m_MethodName: SpectateGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1235,11 +1235,12 @@ MonoBehaviour:
   playerReference: []
   chat: []
   RoomID: {fileID: 1515216878}
-  gameID: asd
   countField: {fileID: 0}
-  countChanged: 1
+  gameID: asd
   UserID: 
+  countChanged: 1
   scenechanged: 0
+  _isplayer: 1
 --- !u!114 &984645976
 MonoBehaviour:
   m_ObjectHideFlags: 0
