@@ -9,16 +9,11 @@ let debug = false;
 io.on("connection", (socket) => {
   console.log("a user connected");
 
-  socket.on("my message", (msg) => {
-    if (debug == true) {
-      console.log(msg);
-    }
-    socket.broadcast.emit('br', msg);
-  });
   socket.on("CreateRoom", (data) => {
     const rooms = io.of("/").adapter.rooms;
     if (!(rooms.has(data.RoomID))) {
       socket.join(data.RoomID)
+      socket.join(data.RoomID + "WatchRoom")
       socket.emit('createRoomStatus', { 'status': 'true', 'UserID': socket.id, 'RoomID': data.RoomID })
     }
     else {
@@ -33,14 +28,23 @@ io.on("connection", (socket) => {
       console.log(rooms)
 
     if (rooms.has(data.RoomID)) {
-      socket.join(data.RoomID)
-      socket.emit('roomStatus', { 'status': 'true', 'RoomID': data.RoomID, 'UserID': socket.id })
+      if (data.player == 'true') {
+        socket.join(data.RoomID)
+        socket.join(data.RoomID + "WatchRoom")
+        socket.emit('roomStatus', { 'status': 'true', 'RoomID': data.RoomID, 'UserID': socket.id })
+      }
+      else if (data.player == 'false') {
+        socket.join(data.RoomID + "WatchRoom")
+        socket.emit('watchStatus', { 'status': 'true', 'RoomID': data.RoomID, 'UserID': socket.id })
+      }
     }
     else {
       socket.emit('roomStatus', { 'status': 'false' })
     }
     //socket.join();
   })
+
+
 
   socket.on("refreshplayers", (data) => {
     const rooms = io.of("/").adapter.rooms;
@@ -49,7 +53,7 @@ io.on("connection", (socket) => {
       msg += id + ','
     })
     msg = msg.slice(0, -1)
-    io.in(data.RoomID).emit('refresh', { 'playerIDs': msg })
+    io.in(data.RoomID + "WatchRoom").emit('refresh', { 'playerIDs': msg })
     //socket.join();
   })
 
@@ -63,7 +67,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("Coord", (data) => {
-    socket.to(data.RoomID).emit('CoordBroadcast', { 'UserID': data.UserID, 'msg': data.msg })
+    socket.to(data.RoomID + "WatchRoom").emit('CoordBroadcast', { 'UserID': data.UserID, 'msg': data.msg })
   })
 
 
@@ -71,7 +75,7 @@ io.on("connection", (socket) => {
     const rooms = io.of("/").adapter.rooms;
     if (rooms.has(data.RoomID)) {
       if (rooms.get(data.RoomID).has(socket.id)) {
-        socket.to(data.RoomID).emit('ChatBroadcast', { 'msg': socket.id + " :: " + data.msg })
+        socket.to(data.RoomID + "WatchRoom").emit('ChatBroadcast', { 'msg': socket.id + " :: " + data.msg })
       }
     }
   })
