@@ -34,6 +34,23 @@ def connect_handler():
 
 
 @sio.event
+def watchStatus(data):
+    global RoomID, UserID
+# if true return the status and the room id to show it on the lobby
+    if data['status'] == 'true':
+        RoomID = data['RoomID']
+        UserID = data['UserID']
+        msg = 'true,'+RoomID+','+UserID
+        sendServer.send(msg.encode('utf-8'))
+        sio.emit('refreshplayers', {'RoomID': RoomID})
+# else return false to prevent joining the room
+    else:
+        sendServer.send('false,'.encode('utf-8'))
+    if debug:
+        print(data)
+
+
+@sio.event
 def roomStatus(data):
     global RoomID, UserID
 # if true return the status and the room id to show it on the lobby
@@ -139,9 +156,12 @@ def unityReceive():
                                 'RoomID': data
                             })
                         elif func == '/Join':
-                            print(data)
+                            if debug:
+                                print(data)
+                            Room, player = data.split(',')
                             sio.emit('joinRoom', {
-                                'RoomID': data
+                                'RoomID': Room,
+                                'player': player
                             })
                         elif func == "/Start":
                             sio.emit('StartGame', {
