@@ -232,7 +232,7 @@ if __name__ == '__main__':
     # https://race-car.onrender.com/
     # http://localhost:3000
     # http://ec2-54-196-9-211.compute-1.amazonaws.com:3000/
-    sio.connect('http://ec2-54-196-9-211.compute-1.amazonaws.com:3000/')
+    sio.connect('https://race-car.onrender.com/')
     print("connected")
     # thread to receive messages from unity and proccess them
     thread1 = threading.Thread(target=unityReceive)
