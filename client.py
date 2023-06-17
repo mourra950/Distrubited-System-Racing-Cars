@@ -20,7 +20,7 @@ UserID = None
 RoomID = None
 
 
-debug = False
+debug = True
 
 # handle event when user connect
 
@@ -212,13 +212,14 @@ def Chat():
         unityChatSocket = conn
         while True:
             data = conn.recv(1024).decode('utf-8')
+            print("watcher")
             func, data = data.split(',', maxsplit=1)
             if debug:
                 print(func, data)
             # broadcast message to all servers
             if func == "/Message":
                 if debug:
-                    print(data)
+                    print(data,RoomID)
                 sio.emit('ChatRoom', {'RoomID': RoomID, 'msg': data})
 
             else:
