@@ -4,7 +4,6 @@ from datetime import datetime
 import socket
 import threading
 
-
 # socket io handler
 sio = socketio.Client()
 # a handler to send data to unity during runtime using low level sockets
@@ -20,7 +19,7 @@ UserID = None
 RoomID = None
 
 
-debug = True
+debug = False
 
 # handle event when user connect
 
@@ -82,7 +81,7 @@ def CoordBroadcast(data):
     global sendServer
     msg = '/NCoord,'+data['UserID']+','+data['msg']
     # if debug:
-        # print(msg)
+    # print(msg)
     sendServer.send(msg.encode('utf-8'))
 
 # event handler to refresh the list of players on all machines
@@ -219,7 +218,7 @@ def Chat():
             # broadcast message to all servers
             if func == "/Message":
                 if debug:
-                    print(data,RoomID)
+                    print(data, RoomID)
                 sio.emit('ChatRoom', {'RoomID': RoomID, 'msg': data})
 
             else:
@@ -233,7 +232,10 @@ if __name__ == '__main__':
     # https://race-car.onrender.com/
     # http://localhost:3000
     # http://ec2-54-196-9-211.compute-1.amazonaws.com:3000/
-    sio.connect('https://race-car.onrender.com/')
+
+    # Replace 'ip-172-31-82-193.ec2.internal' with your hostname
+    # Create a Boto3 EC2 client
+    sio.connect('http://ec2-18-207-189-50.compute-1.amazonaws.com:3000/')
     print("connected")
     # thread to receive messages from unity and proccess them
     thread1 = threading.Thread(target=unityReceive)
