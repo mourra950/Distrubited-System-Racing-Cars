@@ -33,7 +33,7 @@ public class gamelogic : MonoBehaviour
         }
         else
         {
-            Instantiate(cameraspectate, new Vector3(0, 11.4f, 1.4f), Quaternion.identity);
+            Instantiate(cameraspectate, new Vector3(0, 11.4f, 1.4f), Quaternion.Euler(90,0,0));
         }
         string[] temparray = gameManager.playertestlist.ToArray();
         //for loop for instantiating

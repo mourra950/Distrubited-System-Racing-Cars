@@ -16,12 +16,6 @@ EditorBuildSettings:
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Lobby 1.unity
-    guid: 77db6039e8d6e684a9bc92fb22eda202
-  - enabled: 0
-    path: Assets/Scenes/Lobby 2.unity
-    guid: 9841821e107361145b507b6487c6d5b8
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+    guid: 5a2a0e11fd0b24a41a61dccb21fbeca7
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: dac9b950d52957144b56466319031db6, type: 2}
