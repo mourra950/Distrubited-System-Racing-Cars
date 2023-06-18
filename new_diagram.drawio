@@ -1,0 +1,97 @@
+<mxfile host="app.diagrams.net" modified="2023-06-17T23:28:00.654Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.43" etag="_vrVc3HYWAd5uwRJh53u" version="21.4.0" type="device">
+  <diagram name="Page-1" id="5f0bae14-7c28-e335-631c-24af17079c00">
+    <mxGraphModel dx="1235" dy="684" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-1" value="" style="image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/computer_and_terminals/Personal_Computer.svg;" vertex="1" parent="1">
+          <mxGeometry x="480" y="100" width="73.79" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-2" value="" style="image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/computer_and_terminals/Personal_Computer.svg;" vertex="1" parent="1">
+          <mxGeometry x="760" y="100" width="73.79" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-3" value="" style="image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/computer_and_terminals/Personal_Computer.svg;" vertex="1" parent="1">
+          <mxGeometry x="200" y="100" width="73.79" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-4" value="Client" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="211.89000000000001" y="190" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-5" value="Client" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="771.89" y="190" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-6" value="Client" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="491.89" y="190" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#3399FF;" vertex="1" parent="1">
+          <mxGeometry x="176.9" y="230" width="663.1" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-10" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;startArrow=block;fillColor=default;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="516.75" y="210" as="sourcePoint" />
+            <mxPoint x="516.3" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-11" value="&lt;b&gt;Presentation Tier&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="25" y="148" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-12" value="" style="pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#4495D1;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.veeam.2d.proxy;" vertex="1" parent="1">
+          <mxGeometry x="777.09" y="330" width="44.8" height="44.8" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-13" value="" style="pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#4495D1;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.veeam.2d.proxy;" vertex="1" parent="1">
+          <mxGeometry x="210" y="330" width="44.8" height="44.8" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-14" value="" style="pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#4495D1;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.veeam.2d.proxy;" vertex="1" parent="1">
+          <mxGeometry x="494.5" y="330" width="44.8" height="44.8" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#3399FF;" vertex="1" parent="1">
+          <mxGeometry x="170.69" y="390" width="663.1" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-16" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;startArrow=block;fillColor=default;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="232.26000000000005" y="210" as="sourcePoint" />
+            <mxPoint x="231.81" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-17" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;startArrow=block;fillColor=default;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="799.35" y="210" as="sourcePoint" />
+            <mxPoint x="798.9" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-18" value="&lt;b&gt;Proxy Tier&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="45" y="310" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-19" value="" style="image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/computer_and_terminals/Server_Desktop.svg;" vertex="1" parent="1">
+          <mxGeometry x="466.74" y="500" width="71" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-20" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;startArrow=block;fillColor=default;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="370" as="sourcePoint" />
+            <mxPoint x="516.3" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-21" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;startArrow=block;fillColor=default;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="370" as="sourcePoint" />
+            <mxPoint x="510" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-22" value="Proxy" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="207.4" y="370" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-23" value="Proxy" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="491.89" y="370" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-24" value="Proxy" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="774.49" y="370" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-25" value="Server" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="472.24" y="590" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PSes0_nJkehlpFZH4_Ls-26" value="&lt;b&gt;Server Tier&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="40" y="500" width="90" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
