@@ -23,4 +23,5 @@ compete against each other in a real time virtual racing environment. To get sta
 ## YouTube Demonstration Video
 For a visual guide on how to download, install, and run the multiplayer distributed racing car game, we have provided a demonstration video on YouTube. This video will walk you through the entire process, making it easier to get started with the game.
 
-Click on the link below to watch the demonstration video:
+Click on the link below to watch the demonstration video:<br/>
+https://youtu.be/XfoahjVGTwg
