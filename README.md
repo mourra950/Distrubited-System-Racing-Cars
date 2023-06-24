@@ -1,5 +1,7 @@
 # Distrubited System Racing Cars
 
+![SereneFinal](https://github.com/mourra950/Distrubited-System-Racing-Cars/assets/64339763/1c59fcfc-2a09-4b6e-b588-ffcfa25b0073)
+
 Welcome to our multiplayer distributed racing car game! The primary objective of this project was to develop a game that supports multiple agents competing for shared resources in real-time. Our focus was on ensuring the game could be distributed across multiple clients and server nodes while maintaining robustness. Even in the event of a client crash or disconnection, the game remains functional, allowing the affected player to recover and resume gameplay.
 
 To achieve our goals, we made deliberate choices regarding the technologies utilized. Although we had the freedom to use any packages or languages, we decided to stick with basic libraries and code the system ourselves. This approach enabled us to gain a deeper understanding of socket programming and further enhance our learning experience.
