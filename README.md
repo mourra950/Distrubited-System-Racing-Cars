@@ -14,20 +14,21 @@ The architecture of our multiplayer distributed racing car game is illustrated i
 4. MongoDB Server: Stores game information and updates for the game server.
 5. Node.js Data Server: Fetches data from the MongoDB server and provides a REST API for the React webpage.
 6. React Webpage: Showcases the project, utilizing data from the Node.js data server.
-7. We've designed this architecture to ensure smooth communication between the Unity game instance, the Python proxy server, the dedicated game server, and the web components. It leverages a combination of technologies to provide an engaging and dynamic multiplayer gaming experience.
-8. Please feel free to explore the code and contribute to the further development of our multiplayer distributed racing car game.
+We've designed this architecture to ensure smooth communication between the Unity game instance, the Python proxy server, the dedicated game server, and the web components. It leverages a combination of technologies to provide an engaging and dynamic multiplayer gaming experience.In case you want to check the code you can check the branches.
 
-## Prerequisites
+## Run game
+
+### Prerequisite
 
 * Windows operating system
 * Python and Pip installed
 
-## Installation Steps
+### Installation Steps
 
 1. Download the game files by clicking on the following link: [Download](https://drive.google.com/drive/folders/1frWMftkLvu9jjcvbRjIKaBYx2iYEl2MM?usp=sharing)
 2. Extract the contents of the downloaded ZIP file to a location of your choice.
 
-## Installing Python proxy server Dependencies
+### Installing Python proxy server Dependencies
 
 1. From root directory of the project.
 2. Look for a file named "Run first time.exe" and double-click on it or run using the terminal
@@ -43,14 +44,14 @@ or
 ```
 ![Uploading Node_Distribution.svg…]()
 
-## Running the Game
+### Excute the game
 
 1. Navigate to the root directory.
 2. Look for a file named "run.exe" and excute it.
 3. The proxy script will run in the background and the game will launch.
 4. On launch the first scene will be the main menu where you can freely create, join or spectate a game.
 
-## Controls
+### Controls
 
 
 | Description | Keys |
@@ -58,13 +59,13 @@ or
 | car movment   | ![keyboards](https://github.com/mourra950/Distrubited-System-Racing-Cars/assets/64339763/700a231d-ba02-4b31-8875-6b9192696234) |
 | chat control     | ![ctrls](https://github.com/mourra950/Distrubited-System-Racing-Cars/assets/64339763/1ef5efb5-12b0-4865-a5bf-9452f30c0859)   |
 
-### Car Movment
+#### Car Movment
 
 * The car controls are easy which WASD the norm control for movment in any video game.
 * W to move forward, S to move backward.
 * A to steer left, D to steer right but the car cant rotate unless the car is moving.
 
-### Chatting 
+#### Chatting 
 
 * Using sockets and socketio every client is able to broadcast messages with ease.
 * In order to send a message the user need to type it in the input field provided during the game or in lobby.
