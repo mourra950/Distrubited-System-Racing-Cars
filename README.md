@@ -37,16 +37,19 @@ or
 
 ## Controls
 
+
 | Description | Keys |
 | :---:        |     :---:      |
-| git status   | git status     |
-| git diff     | git diff       |
+| car movment   | ![keyboards](https://github.com/mourra950/Distrubited-System-Racing-Cars/assets/64339763/700a231d-ba02-4b31-8875-6b9192696234) |
+| chat control     | ![ctrls](https://github.com/mourra950/Distrubited-System-Racing-Cars/assets/64339763/1ef5efb5-12b0-4865-a5bf-9452f30c0859)   |
+
+### Car Movment
 
 * The car controls are easy which WASD the norm control for movment in any video game.
 * W to move forward, S to move backward.
 * A to steer left, D to steer right but the car cant rotate unless the car is moving.
 
-## Chatting
+### Chatting 
 
 * Using sockets and socketio every client is able to broadcast messages with ease.
 * In order to send a message the user need to type it in the input field provided during the game or in lobby.
