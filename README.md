@@ -42,7 +42,6 @@ or
 ```bash
    pip install -r requirements.txt
 ```
-![Uploading Node_Distribution.svg…]()
 
 ### Excute the game
 
