@@ -1,7 +1,21 @@
 # Distrubited System Racing Cars
 
-This is a multiplayer distributed racing car game that allows multiple players to
-compete against each other in a real time virtual racing environment. To get started, please follow the instructions below.
+Welcome to our multiplayer distributed racing car game! The primary objective of this project was to develop a game that supports multiple agents competing for shared resources in real-time. Our focus was on ensuring the game could be distributed across multiple clients and server nodes while maintaining robustness. Even in the event of a client crash or disconnection, the game remains functional, allowing the affected player to recover and resume gameplay.
+
+To achieve our goals, we made deliberate choices regarding the technologies utilized. Although we had the freedom to use any packages or languages, we decided to stick with basic libraries and code the system ourselves. This approach enabled us to gain a deeper understanding of socket programming and further enhance our learning experience.
+
+The architecture of our multiplayer distributed racing car game is illustrated in the diagram below:
+
+![Node_Distribution](https://github.com/mourra950/Distrubited-System-Racing-Cars/assets/64339763/69604caf-c0ff-4a14-85c2-a90725dfe8ed)
+
+1. Unity Game Instance: The game itself, developed using Unity game engine.
+2. Python Proxy Server: Acts as a middle layer between the Unity game instance and the dedicated game server. It facilitates communication using TCP/IP sockets.
+3. Dedicated Game Server: Developed using Node.js and deployed on EC2. This server handles game logic and real-time interactions using the Socket.IO library.
+4. MongoDB Server: Stores game information and updates for the game server.
+5. Node.js Data Server: Fetches data from the MongoDB server and provides a REST API for the React webpage.
+6. React Webpage: Showcases the project, utilizing data from the Node.js data server.
+7. We've designed this architecture to ensure smooth communication between the Unity game instance, the Python proxy server, the dedicated game server, and the web components. It leverages a combination of technologies to provide an engaging and dynamic multiplayer gaming experience.
+8. Please feel free to explore the code and contribute to the further development of our multiplayer distributed racing car game.
 
 ## Prerequisites
 
@@ -27,6 +41,7 @@ or
 ```bash
    pip install -r requirements.txt
 ```
+![Uploading Node_Distribution.svg…]()
 
 ## Running the Game
 
